@@ -2,3 +2,14 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+.transport-type {
+    font-size:20px
+}
+
+@media (min-width: 768px) {
+
+    .transport-type {
+        font-size:36px
+    }
+}

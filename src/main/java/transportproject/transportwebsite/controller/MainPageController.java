@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainPageController {
 
+    private static final String MAIN_PAGE = "index";
+
     /**
      * index page controller method
      *
@@ -14,6 +16,6 @@ public class MainPageController {
      */
     @GetMapping("/")
     public String mainPage() {
-        return "index";
+        return MAIN_PAGE;
     }
 }

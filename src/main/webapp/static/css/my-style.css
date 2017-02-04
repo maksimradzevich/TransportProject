@@ -13,3 +13,8 @@ body {
         font-size:36px
     }
 }
+
+.ostanovka_name {
+    /*padding-top: 10px;*/
+    padding-bottom: 10px;
+}

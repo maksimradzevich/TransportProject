@@ -2,20 +2,20 @@ package transportproject.transportwebsite.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainPageController {
 
-    private static final String MAIN_PAGE = "index";
+    private static final String MAIN_PAGE_TEMPLATE = "index";
+    private static final String MAIN_PAGE_MAPPING = "/";
 
     /**
      * index page controller method
      *
-     * @return index page template
+     * @return main page template
      */
-    @GetMapping("/")
+    @GetMapping(MAIN_PAGE_MAPPING)
     public String mainPage() {
-        return MAIN_PAGE;
+        return MAIN_PAGE_TEMPLATE;
     }
 }

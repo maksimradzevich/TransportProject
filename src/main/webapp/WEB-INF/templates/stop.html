@@ -8,21 +8,6 @@
 
     <div th:replace="fragment :: nav"></div>
 
-    <div class="row">
-        <div class="col-xs-6">
-            <h1 class="transport-type">Автобусы</h1>
-            <h3 th:each="bus : ${buses}">
-                <a href="#" th:text="${bus.routeNumber}">1</a>
-            </h3>
-
-        </div>
-        <div class="col-xs-6">
-            <h1 class="transport-type">Троллейбусы</h1>
-            <h3 th:each="trolleybus : ${trolleybuses}">
-                <a href="#" th:text="${trolleybus.routeNumber}">12</a>
-            </h3>
-
-    </div>
 
 
 </div>

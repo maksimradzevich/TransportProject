@@ -1,7 +1,5 @@
 package transportproject.transportwebsite.model;
 
-import transportproject.transportwebsite.model.transport.Transport;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,8 +16,11 @@ public class Route {
     @JoinColumn(name = "transport_id")
     private Transport transport;
 
-    @ManyToMany(mappedBy = "routes")
-    private List<Stop> stops;
+    @OneToMany(mappedBy = "route")
+    private List<RouteStop> routeStops;
+
+//    @ManyToMany(mappedBy = "routes")
+//    private List<Stop> stops;
 
     public Integer getRouteId() {
         return routeId;
@@ -37,16 +38,24 @@ public class Route {
         this.transport = transport;
     }
 
-    public List<Stop> getStops() {
-        return stops;
-    }
-
-    public void setStops(List<Stop> stops) {
-        this.stops = stops;
-    }
+//    public List<Stop> getStops() {
+//        return stops;
+//    }
+//
+//    public void setStops(List<Stop> stops) {
+//        this.stops = stops;
+//    }
 
     public Route(Transport transport) {
         this.transport = transport;
+    }
+
+    public List<RouteStop> getRouteStops() {
+        return routeStops;
+    }
+
+    public void setRouteStops(List<RouteStop> routeStops) {
+        this.routeStops = routeStops;
     }
 
     public Route() {

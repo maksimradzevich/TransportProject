@@ -15,17 +15,29 @@ public class Stop {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "Route_Stop",
-                joinColumns = {
-                    @JoinColumn(name = "stop_id")
-                },
-                inverseJoinColumns = {
-                    @JoinColumn(name = "route_id")
-                })
-    private List<Route> routes;
+    @OneToMany(mappedBy = "stop")
+    private List<RouteStop> routeStops;
+
+//    @ManyToMany
+//    @JoinTable(name = "RouteStop",
+//                joinColumns = {
+//                    @JoinColumn(name = "stop_id")
+//                },
+//                inverseJoinColumns = {
+//                    @JoinColumn(name = "route_id")
+//                })
+//    private List<Route> routes;
+
+    public List<RouteStop> getRouteStops() {
+        return routeStops;
+    }
+
+    public void setRouteStops(List<RouteStop> routeStops) {
+        this.routeStops = routeStops;
+    }
 
     public Stop() {
+
     }
 
     public Stop(String name) {

@@ -1,6 +1,6 @@
-package transportproject.transportwebsite.model.transport;
+package transportproject.transportwebsite.model;
 
-import transportproject.transportwebsite.model.Route;
+import transportproject.transportwebsite.model.transport.TransportType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,14 +13,17 @@ public class Transport {
     @Column(name = "transport_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private TransportType type;
+
     @Column(name = "route_number")
     private Integer routeNumber;
 
     @OneToMany(mappedBy = "transport", cascade = CascadeType.ALL)
     private List<Route> routes;
+
 
     public Transport() {
     }

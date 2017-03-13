@@ -6,15 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import transportproject.transportwebsite.dao.TransportDAO;
 import transportproject.transportwebsite.model.Route;
+import transportproject.transportwebsite.model.RouteStop;
 import transportproject.transportwebsite.model.Stop;
-import transportproject.transportwebsite.model.transport.Transport;
+import transportproject.transportwebsite.model.Transport;
 import transportproject.transportwebsite.model.transport.TransportType;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Controller
-@Transactional //TODO delete this
+@Transactional
 public class TestController {
     private final TransportDAO transportDAO;
 
@@ -31,7 +32,7 @@ public class TestController {
 
         final Route route = transport.getRoutes().get(0);
         Hibernate.initialize(route);
-        final List<Stop> stops = route.getStops();
+        final List<RouteStop> stops = route.getRouteStops();
         Hibernate.initialize(stops);
         System.out.println(stops);
         return "test";

@@ -1,6 +1,7 @@
 package transportproject.transportwebsite.dao.impl;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -17,6 +18,8 @@ import java.util.List;
 @Repository("transportDAO")
 public class TransportDAOImpl implements TransportDAO {
 
+    public static final String TYPE_FIELD = "type";
+    private static final String ROUTE_NUMBER_FIELD = "routeNumber";
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -40,7 +43,17 @@ public class TransportDAOImpl implements TransportDAO {
     @Override
     public List<Transport> findTransportByType(TransportType transportType) {
         Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("type", transportType));
+        criteria.add(Restrictions.eq(TYPE_FIELD, transportType));
         return criteria.list();
+    }
+
+    @Override
+    public Transport findTransportByRouteNumberAndTypeWithRoutes(int routeNumber, TransportType transportType) {
+        final Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq(TYPE_FIELD, transportType));
+        criteria.add(Restrictions.eq(ROUTE_NUMBER_FIELD, routeNumber));
+        final Transport transport = (Transport) criteria.uniqueResult();
+        Hibernate.initialize(transport.getRoutes());
+        return transport;
     }
 }

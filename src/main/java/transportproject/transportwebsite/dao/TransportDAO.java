@@ -9,4 +9,6 @@ public interface TransportDAO {
     List<Transport> findAllTransport();
 
     List<Transport> findTransportByType(TransportType transportType);
+
+    Transport findTransportByRouteNumberAndTypeWithRoutes(int routeNumber, TransportType transportType);
 }

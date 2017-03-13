@@ -1,13 +1,11 @@
 package transportproject.transportwebsite.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Stop")
 public class Stop {
-
-    public Stop() {
-    }
 
     @Id
     @Column(name = "stop_id")
@@ -16,6 +14,23 @@ public class Stop {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    @JoinTable(name = "Route_Stop",
+                joinColumns = {
+                    @JoinColumn(name = "stop_id")
+                },
+                inverseJoinColumns = {
+                    @JoinColumn(name = "route_id")
+                })
+    private List<Route> routes;
+
+    public Stop() {
+    }
+
+    public Stop(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -39,9 +54,5 @@ public class Stop {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    public Stop(String name) {
-        this.name = name;
     }
 }

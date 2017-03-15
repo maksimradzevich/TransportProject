@@ -30,7 +30,16 @@ public class RouteStop {
         this.timetable = timetable;
     }
 
+    public Integer getRouteStopId() {
+        return routeStopId;
+    }
+
+    public void setRouteStopId(Integer routeStopId) {
+        this.routeStopId = routeStopId;
+    }
+
     public Route getRoute() {
+
         return route;
     }
 

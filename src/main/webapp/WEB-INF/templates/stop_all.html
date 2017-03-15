@@ -9,16 +9,22 @@
     <div th:replace="fragment :: nav"></div>
 
 
-    <h1 th:text="${'Расписание для ' + transportName + ' №' + transportNumber}"></h1>
-    <h3 th:text="${stopName}"></h3>
-    <h3 th:text="${routeName}"></h3>
+    <div th:each="rs : ${rStops}">
+        <h1 th:text="${'Расписание для ' + rs.route.transport.type.name + ' №' + rs.route.transport.routeNumber}"></h1>
+        <h3 th:text="${rs.stop.name}"></h3>
+        <h3 th:text="${rs.route.name}"></h3>
 
-    <p style="display: none" id="t" th:text="${timetable}"></p>
+        <!--th:text="${timetable}"-->
+        <p style="display: none" th:id="t + ${rs.routeStopId}" id="t" th:text="${rs.timetable}"></p>
 
-    <div id="timetable"></div>
-    <script type="text/javascript">
-        addTable("")
-    </script>
+        <div id="timetable" th:id="timetable + ${rs.routeStopId}"></div>
+        <script type="text/javascript" th:text="'addTable(' + ${rs.routeStopId} + ')'">
+
+        </script>
+    </div>
+
+
+
 
 </div>
 

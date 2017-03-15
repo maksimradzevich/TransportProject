@@ -1,18 +1,23 @@
-var timetable = document.getElementById("t");
 
-var stringJson = timetable.innerHTML;
-console.log(stringJson);
-var json = JSON.parse(stringJson);
 
-var numberOfInner = json.length;
-console.log(numberOfInner);
+function addTable(index) {
 
-var tableOfTimetable = createTableOfTimetable(json);
-tableOfTimetable.className = "table table-bordered";
-// tableOfTimetable.addClass("table");
-// tableOfTimetable.addClass("table-bordered");
+    console.log("CALL addTable with index: " + index);
 
-    document.getElementById("timetable").appendChild(tableOfTimetable);
+    var timetable = document.getElementById("t" + index);
+    var stringJson = timetable.innerHTML;
+    var json = JSON.parse(stringJson);
+    var tableOfTimetable = createTableOfTimetable(json);
+    tableOfTimetable.className = "table table-bordered";
+    document.getElementById("timetable" + index).appendChild(tableOfTimetable);
+}
+
+// var timetable = document.getElementById("t");
+// var stringJson = timetable.innerHTML;
+// var json = JSON.parse(stringJson);
+// var tableOfTimetable = createTableOfTimetable(json);
+// tableOfTimetable.className = "table table-bordered";
+// document.getElementById("timetable").appendChild(tableOfTimetable);
 
 //
 // for (var i = 0; i < numberOfInner; i++) {

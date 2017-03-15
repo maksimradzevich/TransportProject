@@ -12,6 +12,8 @@ import transportproject.transportwebsite.model.RouteStop;
 import transportproject.transportwebsite.model.Stop;
 import transportproject.transportwebsite.model.Transport;
 
+import java.util.List;
+
 @Controller
 public class StopController {
 
@@ -24,8 +26,22 @@ public class StopController {
         this.routeStopDAO = routeStopDAO;
     }
 
+    @GetMapping("/stop/{stopId}")
+    public String stopPage(@PathVariable("stopId") Integer stopId, Model model) {
+
+        List<RouteStop> routeStops = routeStopDAO.getRouteStopsByStopId(stopId);
+//        System.out.println(routeStops);
+
+        model.addAttribute("rStops", routeStops);
+
+        return "stop_all";
+    }
+
     @GetMapping("/stop/{stopId}/{routeId}")
     public String stopPageForRoute(Model model, @PathVariable("stopId") Integer stopId, @PathVariable("routeId") Integer routeId) {
+
+
+
         final RouteStop routeStop = routeStopDAO.getRouteStopByRouteIdAndStopId(routeId, stopId);
 //        System.out.println(routeStop.getTimetable());
         final String timetable = routeStop.getTimetable();
@@ -35,6 +51,8 @@ public class StopController {
         final String nameOfTransport = transport.getType().getName();
         final String routeName = route.getName();
         final Stop stop = routeStop.getStop();
+
+
         model.addAttribute("timetable", timetable);
         model.addAttribute("transportName", nameOfTransport);
         model.addAttribute("transportNumber", routeNumber);

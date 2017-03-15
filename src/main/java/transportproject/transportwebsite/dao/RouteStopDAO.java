@@ -11,4 +11,6 @@ public interface RouteStopDAO {
     RouteStop getRouteStopByRouteIdAndStopId(Integer routeId, Integer stopId);
 
     List<RouteStop> getRouteStopByRouteId(Integer routeId);
+
+    List<RouteStop> getRouteStopsByStopId(Integer stopId);
 }

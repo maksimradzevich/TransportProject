@@ -48,7 +48,7 @@ public class RouteStopDAOImpl implements RouteStopDAO {
     public RouteStop getRouteStopByRouteIdAndStopId(Integer routeId, Integer stopId) {
         final Criteria entityCriteria = createEntityCriteria();
         entityCriteria.add(Restrictions.eq("route.id", routeId))
-                .add(Restrictions.eq("stop.id", routeId));
+                .add(Restrictions.eq("stop.id", stopId));
         return (RouteStop) entityCriteria.uniqueResult();
     }
 
@@ -56,6 +56,13 @@ public class RouteStopDAOImpl implements RouteStopDAO {
     public List<RouteStop> getRouteStopByRouteId(Integer routeId) {
         final Criteria entityCriteria = createEntityCriteria();
         entityCriteria.add(Restrictions.eq("route.id", routeId));
+        return entityCriteria.list();
+    }
+
+    @Override
+    public List<RouteStop> getRouteStopsByStopId(Integer stopId) {
+        final Criteria entityCriteria = createEntityCriteria();
+        entityCriteria.add(Restrictions.eq("stop.id", stopId));
         return entityCriteria.list();
     }
 }

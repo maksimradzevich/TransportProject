@@ -9,6 +9,16 @@
     <div th:replace="fragment :: nav"></div>
 
 
+    <h1 th:text=""></h1>
+
+    <p style="display: none" id="t" th:text="${timetable}"></p>
+
+    <table class="table table-bordered">
+        <tbody id="timetable">
+
+        </tbody>
+    </table>
+
 
 </div>
 
@@ -17,5 +27,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../static/js/bootstrap.min.js"></script>
+<script th:src="@{~/static/js/table.js}"></script>
 </body>
 </html>

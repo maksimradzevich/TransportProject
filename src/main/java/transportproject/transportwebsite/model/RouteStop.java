@@ -52,6 +52,6 @@ public class RouteStop {
                 "route=" + route +
                 ", stop=" + stop +
                 ", timetable='" + timetable + '\'' +
-                '}';
+                "}\n";
     }
 }

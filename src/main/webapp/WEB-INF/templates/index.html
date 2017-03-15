@@ -12,25 +12,28 @@
         <div class="col-xs-6">
             <h1 class="transport-type">Автобусы</h1>
             <h3 th:each="bus : ${buses}">
-                <a href="#" th:text="${bus.routeNumber}">1</a>
+                <a href="#" th:href="@{/transport/{type}/{rNumber}(type = ${bus.type}, rNumber=${bus.routeNumber})}"
+                   th:text="${bus.routeNumber}">1</a>
             </h3>
 
         </div>
         <div class="col-xs-6">
             <h1 class="transport-type">Троллейбусы</h1>
             <h3 th:each="trolleybus : ${trolleybuses}">
-                <a href="#" th:text="${trolleybus.routeNumber}">12</a>
+                <a href="#"
+                   th:href="@{/transport/{type}/{rNumber}(type = ${trolleybus.type}, rNumber=${trolleybus.routeNumber})}"
+                   th:text="${trolleybus.routeNumber}">12</a>
             </h3>
+
+        </div>
+
 
     </div>
 
-
 </div>
-
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../../static/js/bootstrap.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../static/js/bootstrap.min.js"></script>
 </body>
 </html>

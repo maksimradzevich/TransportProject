@@ -19,6 +19,17 @@ public class Route {
     @OneToMany(mappedBy = "route")
     private List<RouteStop> routeStops;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name = "name")
+    private String name;
+
 //    @ManyToMany(mappedBy = "routes")
 //    private List<Stop> stops;
 

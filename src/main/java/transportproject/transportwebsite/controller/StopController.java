@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import transportproject.transportwebsite.dao.RouteStopDAO;
 import transportproject.transportwebsite.dao.StopDAO;
+import transportproject.transportwebsite.model.Route;
 import transportproject.transportwebsite.model.RouteStop;
+import transportproject.transportwebsite.model.Stop;
+import transportproject.transportwebsite.model.Transport;
 
 @Controller
 public class StopController {
@@ -26,7 +29,17 @@ public class StopController {
         final RouteStop routeStop = routeStopDAO.getRouteStopByRouteIdAndStopId(routeId, stopId);
 //        System.out.println(routeStop.getTimetable());
         final String timetable = routeStop.getTimetable();
+        final Route route = routeStop.getRoute();
+        final Transport transport = route.getTransport();
+        final Integer routeNumber = transport.getRouteNumber();
+        final String nameOfTransport = transport.getType().getName();
+        final String routeName = route.getName();
+        final Stop stop = routeStop.getStop();
         model.addAttribute("timetable", timetable);
+        model.addAttribute("transportName", nameOfTransport);
+        model.addAttribute("transportNumber", routeNumber);
+        model.addAttribute("routeName", routeName);
+        model.addAttribute("stopName", stop.getName());
         return "stop";
     }
 }

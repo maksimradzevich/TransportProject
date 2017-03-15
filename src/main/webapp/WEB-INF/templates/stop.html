@@ -9,15 +9,19 @@
     <div th:replace="fragment :: nav"></div>
 
 
-    <h1 th:text=""></h1>
+    <h1 th:text="${'Расписание для ' + transportName + ' №' + transportNumber}"></h1>
+    <h3 th:text="${stopName}"></h3>
+    <h3 th:text="${routeName}"></h3>
 
     <p style="display: none" id="t" th:text="${timetable}"></p>
 
-    <table class="table table-bordered">
-        <tbody id="timetable">
 
-        </tbody>
-    </table>
+    <div id="timetable"></div>
+    <!--<table class="table table-bordered">-->
+        <!--<tbody id="timetable">-->
+
+        <!--</tbody>-->
+    <!--</table>-->
 
 
 </div>

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import transportproject.transportwebsite.dao.TransportDAO;
-import transportproject.transportwebsite.model.transport.Transport;
+import transportproject.transportwebsite.model.Transport;
 import transportproject.transportwebsite.model.transport.TransportType;
 
 import java.util.List;

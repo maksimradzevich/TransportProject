@@ -10,19 +10,16 @@
 
     <div class="row">
         <div class="col-xs-6">
-            <h1 class="transport-type">Автобусы</h1>
-            <h3 th:each="bus : ${buses}">
-                <a href="#" th:href="@{/transport/{type}/{rNumber}(type = ${bus.type}, rNumber=${bus.routeNumber})}"
-                   th:text="${bus.routeNumber}">1</a>
+            <h1 class="transport-type" th:text="${route1Name}">СШ 13 -- СШ 13</h1>
+            <h3 th:each="routeStop : ${routeStops1}">
+                <a href="#" th:href="@{/stop/{stopId}/{routeId}(stopId = ${routeStop.stop.id}, routeId = ${routeStop.route.routeId})}" th:text="${routeStop.stop.name}">1</a>
             </h3>
 
         </div>
         <div class="col-xs-6">
-            <h1 class="transport-type">Троллейбусы</h1>
-            <h3 th:each="trolleybus : ${trolleybuses}">
-                <a href="#"
-                   th:href="@{/transport/{type}/{rNumber}(type = ${trolleybus.type}, rNumber=${trolleybus.routeNumber})}"
-                   th:text="${trolleybus.routeNumber}">12</a>
+            <h1 class="transport-type" th:text="${route2Name}">СШ 13 -- СШ 13</h1>
+            <h3 th:each="routeStop : ${routeStops2}">
+                <a href="#" th:href="@{/stop/{stopId}/{routeId}(stopId = ${routeStop.stop.id}, routeId = ${routeStop.route.routeId})}" th:text="${routeStop.stop.name}">12</a>
             </h3>
 
         </div>
@@ -30,7 +27,7 @@
 
     </div>
 
-</div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

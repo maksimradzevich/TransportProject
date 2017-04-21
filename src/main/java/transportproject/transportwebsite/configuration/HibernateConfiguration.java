@@ -25,6 +25,7 @@ public class HibernateConfiguration {
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
+        // TODO узнать стоит ли заменить это все дело на что-то другое, чтобы на серваке не валилось
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource());
         sessionFactoryBean.setPackagesToScan("transportproject.transportwebsite.model");

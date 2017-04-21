@@ -37,7 +37,7 @@ public class StopHelperImpl implements StopHelper {
 
         for (Stop st : stops) {
 
-            final char firstLetterOfName = st.getName().charAt(0);
+            final char firstLetterOfName = st.getName().toUpperCase().charAt(0);
 
             if (temporaryLetter == firstLetterOfName) {
                 temporaryList.add(st);

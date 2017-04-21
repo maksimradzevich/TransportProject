@@ -39,12 +39,6 @@ public class RoutesController {
 
         System.out.println(routes);
 
-//        System.out.println(type.name() + routeNumber);
-//        final List<RouteStop> routeStops = routeStopDAO.getRouteStopsByTransportTypeAndRouteNumber(type, routeNumber);
-//        System.out.println(routeStops);
-
-//        final RouteStop routeStop1 = routeStops.get(0);
-
         final List<RouteStop> routeStops1 = routeStopDAO.getRouteStopByRouteId(route1.getRouteId());
         final List<RouteStop> routeStops2 = routeStopDAO.getRouteStopByRouteId(route2.getRouteId());
 

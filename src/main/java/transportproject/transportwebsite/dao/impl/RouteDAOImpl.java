@@ -7,7 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import transportproject.transportwebsite.dao.RouteDAO;
-import transportproject.transportwebsite.model.Route;
+import transportproject.transportwebsite.model.transport.Route;
 import transportproject.transportwebsite.model.transport.TransportType;
 
 import javax.transaction.Transactional;

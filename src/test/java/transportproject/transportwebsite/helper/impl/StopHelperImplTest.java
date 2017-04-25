@@ -1,10 +1,7 @@
 package transportproject.transportwebsite.helper.impl;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-import transportproject.transportwebsite.helper.StopHelper;
-import transportproject.transportwebsite.model.Stop;
+import transportproject.transportwebsite.model.transport.Stop;
 
 import java.util.*;
 

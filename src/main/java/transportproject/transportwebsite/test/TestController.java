@@ -5,10 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import transportproject.transportwebsite.dao.TransportDAO;
-import transportproject.transportwebsite.model.Route;
-import transportproject.transportwebsite.model.RouteStop;
-import transportproject.transportwebsite.model.Stop;
-import transportproject.transportwebsite.model.Transport;
+import transportproject.transportwebsite.model.transport.Route;
+import transportproject.transportwebsite.model.transport.RouteStop;
+import transportproject.transportwebsite.model.transport.Transport;
 import transportproject.transportwebsite.model.transport.TransportType;
 
 import javax.transaction.Transactional;

@@ -1,6 +1,6 @@
 package transportproject.transportwebsite.dao;
 
-import transportproject.transportwebsite.model.RouteStop;
+import transportproject.transportwebsite.model.transport.RouteStop;
 import transportproject.transportwebsite.model.transport.TransportType;
 
 import java.util.List;

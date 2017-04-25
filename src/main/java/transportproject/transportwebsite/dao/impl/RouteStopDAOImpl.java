@@ -7,8 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import transportproject.transportwebsite.dao.RouteStopDAO;
-import transportproject.transportwebsite.model.RouteStop;
-import transportproject.transportwebsite.model.Stop;
+import transportproject.transportwebsite.model.transport.RouteStop;
 import transportproject.transportwebsite.model.transport.TransportType;
 
 import javax.transaction.Transactional;

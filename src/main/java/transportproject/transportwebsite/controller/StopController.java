@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import transportproject.transportwebsite.dao.RouteStopDAO;
 import transportproject.transportwebsite.dao.StopDAO;
-import transportproject.transportwebsite.model.Route;
-import transportproject.transportwebsite.model.RouteStop;
-import transportproject.transportwebsite.model.Stop;
-import transportproject.transportwebsite.model.Transport;
+import transportproject.transportwebsite.model.transport.Route;
+import transportproject.transportwebsite.model.transport.RouteStop;
+import transportproject.transportwebsite.model.transport.Stop;
+import transportproject.transportwebsite.model.transport.Transport;
 
 import java.util.List;
 
@@ -30,9 +30,10 @@ public class StopController {
     public String stopPage(@PathVariable("stopId") Integer stopId, Model model) {
 
         List<RouteStop> routeStops = routeStopDAO.getRouteStopsByStopId(stopId);
-//        System.out.println(routeStops);
+        final Stop stop = stopDAO.findById(stopId);
 
         model.addAttribute("rStops", routeStops);
+        model.addAttribute("stop", stop);
 
         return "stop_all";
     }

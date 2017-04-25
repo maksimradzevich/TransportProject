@@ -7,7 +7,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import transportproject.transportwebsite.dao.StopDAO;
-import transportproject.transportwebsite.model.Stop;
+import transportproject.transportwebsite.model.transport.Stop;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -41,5 +41,10 @@ public class StopDAOImpl implements StopDAO {
         final Criteria entityCriteria = createEntityCriteria();
         entityCriteria.addOrder(Order.asc("name"));
         return entityCriteria.list();
+    }
+
+    @Override
+    public Stop findById(Integer stopId) {
+        return (Stop) getSession().get(Stop.class, stopId);
     }
 }

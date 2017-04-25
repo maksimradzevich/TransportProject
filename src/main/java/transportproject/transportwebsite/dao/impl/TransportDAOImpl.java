@@ -8,7 +8,7 @@
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.stereotype.Repository;
     import transportproject.transportwebsite.dao.TransportDAO;
-    import transportproject.transportwebsite.model.Transport;
+    import transportproject.transportwebsite.model.transport.Transport;
     import transportproject.transportwebsite.model.transport.TransportType;
 
     import javax.transaction.Transactional;

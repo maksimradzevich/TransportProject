@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import transportproject.transportwebsite.dao.RouteDAO;
 import transportproject.transportwebsite.dao.RouteStopDAO;
-import transportproject.transportwebsite.model.Route;
-import transportproject.transportwebsite.model.RouteStop;
+import transportproject.transportwebsite.model.transport.Route;
+import transportproject.transportwebsite.model.transport.RouteStop;
 import transportproject.transportwebsite.model.transport.TransportType;
 
 import java.util.List;

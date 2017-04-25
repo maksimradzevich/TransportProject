@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import transportproject.transportwebsite.dao.StopDAO;
 import transportproject.transportwebsite.helper.StopHelper;
-import transportproject.transportwebsite.model.Stop;
+import transportproject.transportwebsite.model.transport.Stop;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("ImplicitNumericConversion")
 @Service("stopHelper")

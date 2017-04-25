@@ -1,6 +1,4 @@
-package transportproject.transportwebsite.model;
-
-import transportproject.transportwebsite.model.transport.TransportType;
+package transportproject.transportwebsite.model.transport;
 
 import javax.persistence.*;
 import java.util.List;

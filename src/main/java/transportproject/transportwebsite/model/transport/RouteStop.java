@@ -1,4 +1,4 @@
-package transportproject.transportwebsite.model;
+package transportproject.transportwebsite.model.transport;
 
 import javax.persistence.*;
 

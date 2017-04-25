@@ -32,8 +32,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User findByEmail(String email) {
         final Criteria criteria = createEntityCriteria();
-        return (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
+        return (User) criteria.add(Restrictions.eq("email", email)).uniqueResult();
     }
 }

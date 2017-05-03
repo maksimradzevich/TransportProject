@@ -19,7 +19,7 @@ public class RouteStop {
     @JoinColumn(name = "stop_id")
     private Stop stop;
 
-    @Column(name = "timetable")
+    @Column(name = "timetable", length = 4000)
     private String timetable;
 
     public String getTimetable() {

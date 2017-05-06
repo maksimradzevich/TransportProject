@@ -18,7 +18,7 @@ import java.util.List;
 @Repository("transportDAO")
 public class TransportDAOImpl implements TransportDAO {
 
-    public static final String TYPE_FIELD = "type";
+    private static final String TYPE_FIELD = "type";
     private static final String ROUTE_NUMBER_FIELD = "routeNumber";
     private final SessionFactory sessionFactory;
 

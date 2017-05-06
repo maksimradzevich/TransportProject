@@ -21,7 +21,7 @@ public class StopHelperImpl implements StopHelper {
 
     @Override
     public Map<Character, List<Stop>> getSortedStops() {
-        final List<Stop> allStops = stopDAO.findAllStopsSorted();
+        final List<Stop> allStops = stopDAO.findAllByOrderByNameAsc();
         final Map<Character, List<Stop>> mapOfSortedStops = sortStops(allStops);
 
         return mapOfSortedStops;

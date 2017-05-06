@@ -30,7 +30,7 @@ public class StopController {
     public String stopPage(@PathVariable("stopId") Integer stopId, Model model) {
 
         List<RouteStop> routeStops = routeStopDAO.getRouteStopsByStopId(stopId);
-        final Stop stop = stopDAO.findById(stopId);
+        final Stop stop = stopDAO.findOne(stopId);
 
         model.addAttribute("rStops", routeStops);
         model.addAttribute("stop", stop);
@@ -44,7 +44,6 @@ public class StopController {
 
 
         final RouteStop routeStop = routeStopDAO.getRouteStopByRouteIdAndStopId(routeId, stopId);
-//        System.out.println(routeStop.getTimetable());
         final String timetable = routeStop.getTimetable();
         final Route route = routeStop.getRoute();
         final Transport transport = route.getTransport();

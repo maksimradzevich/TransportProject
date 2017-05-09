@@ -40,6 +40,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .failureUrl("/login?error")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/login?error");
+                .accessDeniedPage("/login?error").and().logout().logoutSuccessUrl("/");
     }
 }

@@ -7,23 +7,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import transportproject.transportwebsite.dao.RouteStopDAO;
 import transportproject.transportwebsite.dao.StopDAO;
+import transportproject.transportwebsite.helper.StopHelper;
 import transportproject.transportwebsite.model.transport.Route;
 import transportproject.transportwebsite.model.transport.RouteStop;
 import transportproject.transportwebsite.model.transport.Stop;
 import transportproject.transportwebsite.model.transport.Transport;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class StopController {
 
     private final StopDAO stopDAO;
     private final RouteStopDAO routeStopDAO;
+    private final StopHelper stopHelper;
 
     @Autowired
-    public StopController(StopDAO stopDAO, RouteStopDAO routeStopDAO) {
+    public StopController(StopDAO stopDAO, RouteStopDAO routeStopDAO, StopHelper stopHelper) {
         this.stopDAO = stopDAO;
         this.routeStopDAO = routeStopDAO;
+        this.stopHelper = stopHelper;
     }
 
     @GetMapping("/stop/{stopId}")
@@ -41,8 +45,6 @@ public class StopController {
     @GetMapping("/stop/{stopId}/{routeId}")
     public String stopPageForRoute(Model model, @PathVariable("stopId") Integer stopId, @PathVariable("routeId") Integer routeId) {
 
-
-
         final RouteStop routeStop = routeStopDAO.getRouteStopByRouteIdAndStopId(routeId, stopId);
         final String timetable = routeStop.getTimetable();
         final Route route = routeStop.getRoute();
@@ -52,12 +54,18 @@ public class StopController {
         final String routeName = route.getName();
         final Stop stop = routeStop.getStop();
 
-
         model.addAttribute("timetable", timetable);
         model.addAttribute("transportName", nameOfTransport);
         model.addAttribute("transportNumber", routeNumber);
         model.addAttribute("routeName", routeName);
         model.addAttribute("stopName", stop.getName());
         return "stop";
+    }
+
+    @GetMapping("/stops")
+    public String stopsPage(Model model) {
+        final Map<Character, List<Stop>> sortedStops = stopHelper.getSortedStops();
+        model.addAttribute("stops", sortedStops);
+        return "stops";
     }
 }

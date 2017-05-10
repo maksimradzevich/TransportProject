@@ -58,8 +58,8 @@ public class HibernateConfiguration {
 
 
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setInitialSize(5);
-        dataSource.setMaxIdle(10);
+        dataSource.setInitialSize(1);
+        dataSource.setMaxIdle(5);
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         final Properties properties = getProperties(DATASOURCE_PROPERTIES_PATH);
         dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));

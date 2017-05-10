@@ -1,5 +1,6 @@
 package transportproject.transportwebsite.configuration;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -52,14 +53,20 @@ public class HibernateConfiguration {
         return sessionFactoryBean;
     }
 
+    @Bean(destroyMethod = "close")
+    public DataSource dataSource() {
 
-    private DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setInitialSize(5);
+        dataSource.setMaxIdle(10);
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         final Properties properties = getProperties(DATASOURCE_PROPERTIES_PATH);
         dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
         dataSource.setDriverClassName((String) properties.getProperty("jdbc.driverClassName"));
         dataSource.setUsername(System.getenv("JDBC_DATABASE_USERNAME"));
         dataSource.setPassword((String) properties.getProperty("JDBC_DATABASE_PASSWORD"));
+
         return dataSource;
     }
 

@@ -1,10 +1,17 @@
 package transportproject.transportwebsite.model.transport;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
 @Table(name = "Transport")
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 public class Transport {
 
     @Id

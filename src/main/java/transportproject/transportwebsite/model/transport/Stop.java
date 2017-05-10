@@ -1,10 +1,15 @@
 package transportproject.transportwebsite.model.transport;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
 @Table(name = "Stop")
+@org.hibernate.annotations.Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
 public class Stop {
 
     @Id

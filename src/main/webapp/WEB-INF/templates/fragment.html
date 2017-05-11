@@ -50,11 +50,11 @@
                         class="sr-only">(current)</span></a></li>
                 <li><a href="#" th:href="@{/stops}">По остановке</a></li>
             </ul>
-            <ul th:if="${!#authorization.expression('hasRole(''ROLE_admin'')')}" class="nav navbar-nav navbar-right">
+            <ul th:if="${!#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}" class="nav navbar-nav navbar-right">
                 <li><a href="#" th:href="@{/profile}">Вход</a></li>
                 <li><a href="#" th:href="@{/registration}">Регистрация</a></li>
             </ul>
-            <ul th:if="${#authorization.expression('hasRole(''ROLE_admin'')')}" class="nav navbar-nav navbar-right">
+            <ul th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}" class="nav navbar-nav navbar-right">
                 <li><a href="#" th:href="@{/profile}">Профиль</a></li>
             </ul>
 

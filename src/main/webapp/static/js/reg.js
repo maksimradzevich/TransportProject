@@ -8,8 +8,6 @@ function regController() {
         password: "",
         passwordRetype: ""
     };
-
-    vm.formValid = vm.regform.$invalid && vm.user.password === vm.user.passwordRetype;
 }
 
 module.controller("regCont", [regController]);

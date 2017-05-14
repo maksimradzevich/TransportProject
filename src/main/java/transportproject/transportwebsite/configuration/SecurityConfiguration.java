@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Import(SpringMvcConfiguration.class)
-public class SecurityConfiguration extends WebSecurityConfig surerAdapter{
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     private final UserDetailsService authenticationService;
 
     @Autowired

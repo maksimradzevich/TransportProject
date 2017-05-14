@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import transportproject.transportwebsite.model.transport.Route;
 import transportproject.transportwebsite.model.transport.TransportType;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface RouteDAO{

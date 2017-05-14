@@ -1,21 +1,21 @@
-package transportproject.transportwebsite.helper.impl;
+package transportproject.transportwebsite.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import transportproject.transportwebsite.dao.StopDAO;
-import transportproject.transportwebsite.helper.StopHelper;
+import transportproject.transportwebsite.service.StopService;
 import transportproject.transportwebsite.model.transport.Stop;
 
 import java.util.*;
 
 @SuppressWarnings("ImplicitNumericConversion")
 @Service("stopHelper")
-public class StopHelperImpl implements StopHelper {
+public class StopServiceImpl implements StopService {
 
     private final StopDAO stopDAO;
 
     @Autowired
-    public StopHelperImpl(StopDAO stopDAO) {
+    public StopServiceImpl(StopDAO stopDAO) {
         this.stopDAO = stopDAO;
     }
 

@@ -1,19 +1,19 @@
-package transportproject.transportwebsite.helper.impl;
+package transportproject.transportwebsite.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import transportproject.transportwebsite.dao.UserDAO;
-import transportproject.transportwebsite.helper.RegistrationHelper;
-import transportproject.transportwebsite.helper.exceptions.UserExistsException;
+import transportproject.transportwebsite.service.RegistrationService;
+import transportproject.transportwebsite.service.exceptions.UserExistsException;
 import transportproject.transportwebsite.model.User;
 
 @Service("registrationService")
-public class RegistrationHelperImpl implements RegistrationHelper {
+public class RegistrationServiceImpl implements RegistrationService {
 
     private final UserDAO userDAO;
 
     @Autowired
-    public RegistrationHelperImpl(UserDAO userDAO) {
+    public RegistrationServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 

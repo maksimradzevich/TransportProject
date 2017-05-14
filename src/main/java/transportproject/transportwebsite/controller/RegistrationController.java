@@ -6,19 +6,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import transportproject.transportwebsite.dao.UserDAO;
-import transportproject.transportwebsite.helper.RegistrationHelper;
-import transportproject.transportwebsite.helper.exceptions.UserExistsException;
+import transportproject.transportwebsite.service.RegistrationService;
+import transportproject.transportwebsite.service.exceptions.UserExistsException;
 import transportproject.transportwebsite.model.User;
 
 @Controller
 public class RegistrationController {
     private final UserDAO userDAO;
-    private final RegistrationHelper registrationHelper;
+    private final RegistrationService registrationService;
 
     @Autowired
-    public RegistrationController(UserDAO userDAO, RegistrationHelper registrationHelper) {
+    public RegistrationController(UserDAO userDAO, RegistrationService registrationService) {
         this.userDAO = userDAO;
-        this.registrationHelper = registrationHelper;
+        this.registrationService = registrationService;
     }
 
     @GetMapping("/registration")
@@ -30,7 +30,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String register(User user, Model model) {
         try {
-            registrationHelper.registerUser(user);
+            registrationService.registerUser(user);
         } catch (UserExistsException e) {
             model.addAttribute("exception", e);
             return "registration";

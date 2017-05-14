@@ -28,7 +28,6 @@ import java.util.Properties;
 @ComponentScan({"transportproject.transportwebsite.configuration"})
 public class HibernateConfiguration {
 
-    private static final String DATASOURCE_PROPERTIES_PATH = "datasource.properties";
     private static final String HIBERNATE_PROPERTIES_PATH = "hibernate.properties";
 
     @Bean
@@ -55,17 +54,13 @@ public class HibernateConfiguration {
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-
-
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setInitialSize(1);
         dataSource.setMaxIdle(5);
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        final Properties properties = getProperties(DATASOURCE_PROPERTIES_PATH);
         dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
-        dataSource.setDriverClassName((String) properties.getProperty("jdbc.driverClassName"));
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUsername(System.getenv("JDBC_DATABASE_USERNAME"));
-        dataSource.setPassword((String) properties.getProperty("JDBC_DATABASE_PASSWORD"));
+        dataSource.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
 
         return dataSource;
     }

@@ -2,6 +2,7 @@ package transportproject.transportwebsite.helper.impl;
 
 import org.junit.Before;
 import transportproject.transportwebsite.model.transport.Stop;
+import transportproject.transportwebsite.service.impl.StopServiceImpl;
 
 import java.util.*;
 
@@ -9,11 +10,11 @@ public class StopHelperImplTest {
 
     private List<Stop> stops;
 //    private Set<Character> firstLetters;
-    private StopHelperImpl stopHelper;
+    private StopServiceImpl stopHelper;
 
     @Before
     public void setUp() throws Exception {
-        stopHelper = new StopHelperImpl(null);
+        stopHelper = new StopServiceImpl(null);
         stops = createStops();
 //        firstLetters = createLetters();
     }
@@ -65,7 +66,7 @@ public class StopHelperImplTest {
 //        System.out.println("EXPECTED");
 //        System.out.println(expected);
 //        System.out.println("ACTUAL");
-//        final Map<Character, List<Stop>> actual = StopHelperImpl.sortStops(stops);
+//        final Map<Character, List<Stop>> actual = StopServiceImpl.sortStops(stops);
 //        System.out.println(actual);
 //
 //        Assert.assertEquals(expected, actual);

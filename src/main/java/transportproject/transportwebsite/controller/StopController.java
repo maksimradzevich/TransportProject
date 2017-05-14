@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import transportproject.transportwebsite.dao.RouteStopDAO;
 import transportproject.transportwebsite.dao.StopDAO;
-import transportproject.transportwebsite.helper.StopHelper;
+import transportproject.transportwebsite.service.StopService;
 import transportproject.transportwebsite.model.transport.Route;
 import transportproject.transportwebsite.model.transport.RouteStop;
 import transportproject.transportwebsite.model.transport.Stop;
@@ -21,13 +21,13 @@ public class StopController {
 
     private final StopDAO stopDAO;
     private final RouteStopDAO routeStopDAO;
-    private final StopHelper stopHelper;
+    private final StopService stopService;
 
     @Autowired
-    public StopController(StopDAO stopDAO, RouteStopDAO routeStopDAO, StopHelper stopHelper) {
+    public StopController(StopDAO stopDAO, RouteStopDAO routeStopDAO, StopService stopService) {
         this.stopDAO = stopDAO;
         this.routeStopDAO = routeStopDAO;
-        this.stopHelper = stopHelper;
+        this.stopService = stopService;
     }
 
     @GetMapping("/stop/{stopId}")
@@ -64,7 +64,7 @@ public class StopController {
 
     @GetMapping("/stops")
     public String stopsPage(Model model) {
-        final Map<Character, List<Stop>> sortedStops = stopHelper.getSortedStops();
+        final Map<Character, List<Stop>> sortedStops = stopService.getSortedStops();
         model.addAttribute("stops", sortedStops);
         return "stops";
     }

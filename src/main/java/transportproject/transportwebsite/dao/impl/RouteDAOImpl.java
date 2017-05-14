@@ -32,6 +32,7 @@ public class RouteDAOImpl implements RouteDAO {
         return getSession().createCriteria(Route.class);
     }
 
+
     @Override
     public List<Route> getRoutesByRouteNumberAndTransportType(Integer routeNumber, TransportType transportType) {
 

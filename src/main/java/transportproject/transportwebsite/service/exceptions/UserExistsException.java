@@ -1,4 +1,4 @@
-package transportproject.transportwebsite.helper.exceptions;
+package transportproject.transportwebsite.service.exceptions;
 
 public class UserExistsException extends Exception {
     /**

@@ -10,6 +10,8 @@ import transportproject.transportwebsite.dao.RouteStopDAO;
 import transportproject.transportwebsite.model.transport.Route;
 import transportproject.transportwebsite.model.transport.RouteStop;
 import transportproject.transportwebsite.model.transport.TransportType;
+import transportproject.transportwebsite.service.RouteService;
+import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -18,26 +20,25 @@ public class RoutesController {
 
     private final RouteStopDAO routeStopDAO;
     private final RouteDAO routeDAO;
+    private final RouteService routeService;
 
     @Autowired
-    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO) {
+    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO, RouteService routeService) {
         this.routeStopDAO = routeStopDAO;
         this.routeDAO = routeDAO;
+        this.routeService = routeService;
     }
 
-    //TODO create exception handler for wrong url
     @GetMapping(value = "/transport/{type}/{routeNumber}")
-    public String routeListPage(Model model, @PathVariable("type") TransportType type, @PathVariable("routeNumber") Integer routeNumber) {
+    public String routeListPage(Model model, @PathVariable("type") TransportType type, @PathVariable("routeNumber") Integer routeNumber) throws NotFoundException {
 
-        final List<Route> routes = routeDAO.getRoutesByRouteNumberAndTransportType(routeNumber, type);
+        final List<Route> routes = routeService.getRoutesByNumberAndTransportType(routeNumber, type);
 
         final Route route1 = routes.get(0);
         final Route route2 = routes.get(1);
 
         final String route1Name = route1.getName();
         final String route2Name = route2.getName();
-
-        System.out.println(routes);
 
         final List<RouteStop> routeStops1 = routeStopDAO.getRouteStopByRouteId(route1.getRouteId());
         final List<RouteStop> routeStops2 = routeStopDAO.getRouteStopByRouteId(route2.getRouteId());

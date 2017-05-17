@@ -1,40 +1,40 @@
-
-
 function addTable(index) {
 
-    console.log("CALL addTable with index: " + index);
-
-    var timetable = document.getElementById("t" + index);
-    var stringJson = timetable.innerHTML;
-    var json = JSON.parse(stringJson);
-    var tableOfTimetable = createTableOfTimetable(json);
-    tableOfTimetable.className = "table table-bordered";
-    document.getElementById("timetable" + index).appendChild(tableOfTimetable);
+    let timetable = document.getElementById("t" + index);
+    let stringJson = timetable.innerHTML;
+    let tableOfTimetable;
+    try {
+        let json = JSON.parse(stringJson);
+        tableOfTimetable = createTableOfTimetable(json);
+        tableOfTimetable.className = "table table-bordered";
+        document.getElementById("timetable" + index).appendChild(tableOfTimetable);
+    } catch (e){
+        tableOfTimetable = new DOMParser().parseFromString(stringJson, "text/xml");
+        let tableFromTableLol = createTableFromTableLol(tableOfTimetable.documentElement);
+        tableFromTableLol.className = "table table-bordered";
+        document.getElementById("timetable" + index).appendChild(tableFromTableLol);
+    }
 }
 
-// var timetable = document.getElementById("t");
-// var stringJson = timetable.innerHTML;
-// var json = JSON.parse(stringJson);
-// var tableOfTimetable = createTableOfTimetable(json);
-// tableOfTimetable.className = "table table-bordered";
-// document.getElementById("timetable").appendChild(tableOfTimetable);
+function createTableFromTableLol(tableWrong) {
+    let table = document.createElement("TABLE");
+    let tableBody = document.createElement("TBODY");
+    table.appendChild(tableBody);
 
-//
-// for (var i = 0; i < numberOfInner; i++) {
-//     var tableRow = document.createElement("TR");
-//
-//     for (var prop in json[i]) {
-//
-//         var newVar = json[i][prop];
-//         console.log(newVar);
-//         var text = document.createTextNode(newVar);
-//         var tableCell = document.createElement("TD");
-//         tableCell.appendChild(text);
-//         tableRow.appendChild(tableCell);
-//         // array.push(objectArray[i][prop])
-//     }
-//     document.getElementById("timetable").appendChild(tableRow);
-// }
+    let tbodyNode = tableWrong.childNodes[0];
+
+    for (let trNode of tbodyNode.childNodes) {
+        let tableRow = document.createElement("TR");
+        for (let tdNode of trNode.childNodes) {
+            let text = document.createTextNode(tdNode.innerHTML);
+            let tableCell = document.createElement("TD");
+            tableCell.appendChild(text);
+            tableRow.appendChild(tableCell);
+        }
+        tableBody.appendChild(tableRow);
+    }
+    return table;
+}
 
 function createTableOfTimetable(json) {
     var table = document.createElement("TABLE");

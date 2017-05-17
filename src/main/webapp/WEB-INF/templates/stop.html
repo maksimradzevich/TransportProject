@@ -3,6 +3,7 @@
 <head th:include="fragment :: head">
 </head>
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script th:src="@{~/static/js/table.js}"></script>
 <div class="container">
 
@@ -12,7 +13,7 @@
     <h3 th:text="${stopName}"></h3>
     <h3 th:text="${routeName}"></h3>
 
-    <p style="display: none" id="t" th:text="${timetable}"></p>
+    <p style="display: none" id="t" th:utext="${timetable}"></p>
 
     <div id="timetable"></div>
     <script type="text/javascript">
@@ -23,7 +24,6 @@
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../static/js/bootstrap.min.js"></script>
 <!--TODO change behavior 'document.onload or etc.'-->

@@ -15,9 +15,9 @@
         <div class="col-xs-12 col-sm-1">
             <h1 th:text="${entry.key}">#</h1>
         </div>
-        <div class="row col-xs-12 col-sm-11">
+        <div class="row col-xs-12 col-sm-11 stop-row">
             <div class="col-xs-12 col-sm-4 ostanovka_name" th:each="stop : ${entry.value}">
-                <a href="/ostanovki/289.html" th:href="@{/stop/{stopId}(stopId = ${stop.id})}" th:text="${stop.name}">остановк Первая остановк</a>
+                <a th:href="@{/stop/{stopId}(stopId = ${stop.id})}" th:text="${stop.name}">остановк Первая остановк</a>
             </div>
         </div>
     </div>

@@ -3,6 +3,11 @@ body {
     padding-bottom: 20px;
 }
 
+.stop-row {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
 .transport-type {
     font-size:20px
 }

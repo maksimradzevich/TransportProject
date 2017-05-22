@@ -25,14 +25,14 @@
 
     <div class="row">
         <div class="col-xs-6">
-            <h1 class="transport-type" th:text="${route1Name}">СШ 13 -- СШ 13</h1>
+            <h2 class="transport-type" th:text="${route1Name}">СШ 13 -- СШ 13</h2>
             <h3 th:each="routeStop : ${routeStops1}">
                 <a href="#" th:href="@{/stop/{stopId}/{routeId}(stopId = ${routeStop.stop.id}, routeId = ${routeStop.route.routeId})}" th:text="${routeStop.stop.name}">1</a>
             </h3>
 
         </div>
         <div class="col-xs-6">
-            <h1 class="transport-type" th:text="${route2Name}">СШ 13 -- СШ 13</h1>
+            <h2 class="transport-type" th:text="${route2Name}">СШ 13 -- СШ 13</h2>
             <h3 th:each="routeStop : ${routeStops2}">
                 <a href="#" th:href="@{/stop/{stopId}/{routeId}(stopId = ${routeStop.stop.id}, routeId = ${routeStop.route.routeId})}" th:text="${routeStop.stop.name}">12</a>
             </h3>

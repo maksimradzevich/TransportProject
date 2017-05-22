@@ -7,12 +7,20 @@
 
     <div th:replace="fragment :: nav"></div>
 
-    <div th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}">
-        <div th:if="${favStops.size() > 0}">
+    <div class="row" th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}">
+        <div class="col-sm-6" th:if="${favStops.size() > 0}">
             <h1>Избранные остановки</h1>
             <ul>
                 <li th:each="stop : ${favStops}">
-                    <a th:href="@{~/stop/{stopId}(stopId=${stop.id})}" th:text="${stop.name}"></a>
+                    <a class="text-capitalize" th:href="@{~/stop/{stopId}(stopId=${stop.id})}" th:text="${stop.name}"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-6" th:if="${favTransport.size() > 0}">
+            <h1>Избранный транспорт</h1>
+            <ul>
+                <li th:each="transport : ${favTransport}">
+                    <a class="text-capitalize" th:href="@{/transport/{type}/{rNumber}(type = ${transport.type}, rNumber=${transport.routeNumber})}" th:text="${transport.type.name + ' №' + transport.routeNumber}"></a>
                 </li>
             </ul>
         </div>

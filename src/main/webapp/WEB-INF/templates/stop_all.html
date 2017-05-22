@@ -8,8 +8,8 @@
 
     <div th:replace="fragment :: nav"></div>
 
-    <p style="display: none" id="stopId" th:text="${stop.id}"></p>
-    <h1 class="stop-name" th:text="${stop.name}"></h1>
+    <p style="display: none" id="id" th:text="${stop.id}"></p>
+    <h1 class="stop-name" th:text="${'Остановка ' + stop.name}"> </h1>
 
     <div class="fav-button-container" id="buttonPlace">
         <button th:if="${!inFavorites}" th:onclick="'favorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-warning fav-button">
@@ -23,7 +23,7 @@
 
 
     <div th:each="rs : ${rStops}">
-        <h3 th:text="${'Расписание для ' + rs.route.transport.type.name + ' №' + rs.route.transport.routeNumber}"></h3>
+        <h3 th:text="${'Расписание для ' + rs.route.transport.type.name + 'a №' + rs.route.transport.routeNumber}"></h3>
         <h5 th:text="${rs.route.name}"></h5>
 
         <p style="display: none" th:id="t + ${rs.routeStopId}" id="t" th:utext="${rs.timetable}"></p>

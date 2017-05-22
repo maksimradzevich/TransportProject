@@ -4,19 +4,16 @@ package transportproject.transportwebsite.model;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import transportproject.transportwebsite.model.transport.Stop;
+import transportproject.transportwebsite.model.transport.Transport;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "User")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,17 +24,15 @@ public class User{
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_stop",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "stop_id") })
-    private List<Stop > favoriteStops = new ArrayList<Stop>();
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "stop_id")})
+    private List<Stop> favoriteStops = new ArrayList<Stop>();
+    @ManyToMany(cascade = CascadeType.ALL)
 
-    public List<Stop> getFavoriteStops() {
-        return favoriteStops;
-    }
-
-    public void setFavoriteStops(List<Stop> favoriteStops) {
-        this.favoriteStops = favoriteStops;
-    }
+    @JoinTable(name = "user_transport",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "transport_id")})
+    private List<Transport> favoriteTransport = new ArrayList<Transport>();
 
     public User(String email, String password) {
         this.email = email;
@@ -45,6 +40,22 @@ public class User{
     }
 
     public User() {
+    }
+
+    public List<Transport> getFavoriteTransport() {
+        return favoriteTransport;
+    }
+
+    public void setFavoriteTransport(List<Transport> favoriteTransport) {
+        this.favoriteTransport = favoriteTransport;
+    }
+
+    public List<Stop> getFavoriteStops() {
+        return favoriteStops;
+    }
+
+    public void setFavoriteStops(List<Stop> favoriteStops) {
+        this.favoriteStops = favoriteStops;
     }
 
     public Integer getId() {

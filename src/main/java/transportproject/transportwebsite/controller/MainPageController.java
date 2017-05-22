@@ -43,14 +43,18 @@ public class MainPageController {
     public String mainPage(Model model, Principal principal) {
 
         List<Stop> favoriteStops = new ArrayList<>();
+        List<Transport> favoriteTransport = new ArrayList<>();
         final List<Transport> buses = transportDAO.findTransportByType(TransportType.BUS);
         final List<Transport> trolleybuses = transportDAO.findTransportByType(TransportType.TROLLEYBUS);
         if (principal != null) {
             final User user = userDAO.findByEmail(principal.getName());
             favoriteStops = user.getFavoriteStops();
             Hibernate.initialize(favoriteStops);
+            favoriteTransport = user.getFavoriteTransport();
+            Hibernate.initialize(favoriteTransport);
         }
         model.addAttribute("favStops", favoriteStops);
+        model.addAttribute("favTransport", favoriteTransport);
         model.addAttribute("buses", buses);
         model.addAttribute("trolleybuses",trolleybuses);
         return MAIN_PAGE_TEMPLATE;

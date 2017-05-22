@@ -1,10 +1,13 @@
 package transportproject.transportwebsite.service;
 
-import transportproject.transportwebsite.model.transport.Stop;
-
 public interface FavoriteService {
     void addFavoriteStop(Integer stopId);
-    boolean isInFavorites(Stop stop);
+
+    boolean isInFavorites(Object o);
 
     void removeFavoriteStop(Integer id);
+
+    void addFavoriteTransport(Integer id);
+
+    void removeFavoriteTransport(Integer id);
 }

@@ -2,10 +2,12 @@
  * Created by maximradevich on 22.05.17.
  */
 let favoriteFirst = "<button onclick=\"favorite(";
-let favoriteSecond = ", 'stop');\" type=\"button\" class=\"btn btn-warning fav-button\"><span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span>В избранное</button>"
+let favoriteSecond = ", '";
+let favoriteThird = "');\" type=\"button\" class=\"btn btn-warning fav-button\"><span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span>В избранное</button>";
 
-let unfavoriteFirst = "<button onclick=\"unfavorite(";
-let unfavoriteSecond = ", 'stop');\" type=\"button\" class=\"btn btn-danger fav-button\"><span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span>Убрать из избранного</button>"
+let unfavoriteFirst= "<button onclick=\"unfavorite(";
+let unfavoriteSecond= ", '";
+let unfavoriteThird = "');\" type=\"button\" class=\"btn btn-danger fav-button\"><span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span>Убрать из избранного</button>"
 
 function favorite(id, type) {
     let data = {type: type, id: id};
@@ -19,9 +21,9 @@ function favorite(id, type) {
         timeout : 100000,
         success : function(data) {
             console.log("SUCCESS 12312312: ", data);
-            let stopId = document.getElementById("stopId").innerHTML;
+            let stopId = document.getElementById("id").innerHTML;
             let place = document.getElementById("buttonPlace");
-            place.innerHTML = unfavoriteFirst + stopId + unfavoriteSecond;
+            place.innerHTML = unfavoriteFirst + stopId + unfavoriteSecond + type + unfavoriteThird;
         },
         error : function(e) {
             console.log("ERROR 12312313: ", e);
@@ -44,9 +46,9 @@ function unfavorite(id, type) {
         timeout : 100000,
         success : function(data) {
             console.log("SUCCESS 12312312: ", data);
-            let stopId = document.getElementById("stopId").innerHTML;
+            let stopId = document.getElementById("id").innerHTML;
             let place = document.getElementById("buttonPlace");
-            place.innerHTML = favoriteFirst + stopId + favoriteSecond;
+            place.innerHTML = favoriteFirst + stopId + favoriteSecond + type + favoriteThird;
         },
         error : function(e) {
             console.log("ERROR 12312313: ", e);

@@ -1,5 +1,5 @@
 <!--<!DOCTYPE html>-->
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head th:include="fragment :: head">
 </head>
 <body>
@@ -7,6 +7,21 @@
 <div class="container">
 
     <div th:replace="fragment :: nav"></div>
+
+    <h1  class="stop-name" th:text="${'Маршруты для ' + transport.type.name + ' №' + transport.routeNumber}"></h1>
+
+    <p style="display: none" id="id" th:text="${transport.id}"></p>
+
+
+    <div class="fav-button-container" id="buttonPlace">
+        <button th:if="${!inFavorites}" th:onclick="'favorite(' + ${transport.id} + ', \'transport\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-warning fav-button">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> В избранное
+        </button>
+
+        <button th:if="${inFavorites}" th:onclick="'unfavorite(' + ${transport.id} + ', \'transport\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-danger fav-button ">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Убрать из избранного
+        </button>
+    </div>
 
     <div class="row">
         <div class="col-xs-6">

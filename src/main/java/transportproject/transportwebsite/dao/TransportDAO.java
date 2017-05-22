@@ -11,4 +11,7 @@ public interface TransportDAO {
     List<Transport> findTransportByType(TransportType transportType);
 
     Transport findTransportByRouteNumberAndTypeWithRoutes(int routeNumber, TransportType transportType);
+    Transport findTransportByRouteNumberAndType(int routeNumber, TransportType transportType);
+
+    Transport findById(int id);
 }

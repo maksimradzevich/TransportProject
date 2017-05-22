@@ -48,4 +48,14 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
         return false;
     }
+
+    @Override
+    public void removeFavoriteStop(Integer id) {
+        final Stop stop = stopDAO.findOne(id);
+        final User user = userService.findActiveUser();
+        final List<Stop> favoriteStops = user.getFavoriteStops();
+        Hibernate.initialize(favoriteStops);
+        favoriteStops.remove(stop);
+        userDAO.save(user);
+    }
 }

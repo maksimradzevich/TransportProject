@@ -1,6 +1,12 @@
 /**
  * Created by maximradevich on 22.05.17.
  */
+let favoriteFirst = "<button onclick=\"favorite(";
+let favoriteSecond = ", 'stop');\" type=\"button\" class=\"btn btn-warning fav-button\"><span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span>В избранное</button>"
+
+let unfavoriteFirst = "<button onclick=\"unfavorite(";
+let unfavoriteSecond = ", 'stop');\" type=\"button\" class=\"btn btn-danger fav-button\"><span class=\"glyphicon glyphicon-star\" aria-hidden=\"true\"></span>Убрать из избранного</button>"
+
 function favorite(id, type) {
     let data = {type: type, id: id};
     let dataString = JSON.stringify(data);
@@ -9,10 +15,38 @@ function favorite(id, type) {
         contentType : "application/json",
         url : "/favorite",
         data : dataString,
-        dataType : 'text json',
+        dataType : 'text',
         timeout : 100000,
         success : function(data) {
             console.log("SUCCESS 12312312: ", data);
+            let stopId = document.getElementById("stopId").innerHTML;
+            let place = document.getElementById("buttonPlace");
+            place.innerHTML = unfavoriteFirst + stopId + unfavoriteSecond;
+        },
+        error : function(e) {
+            console.log("ERROR 12312313: ", e);
+        },
+        done : function(e) {
+            console.log("DONE");
+        }
+    });
+}
+
+function unfavorite(id, type) {
+    let data = {type: type, id: id};
+    let dataString = JSON.stringify(data);
+    $.ajax({
+        type : "POST",
+        contentType : "application/json",
+        url : "/unfavorite",
+        data : dataString,
+        dataType : 'text',
+        timeout : 100000,
+        success : function(data) {
+            console.log("SUCCESS 12312312: ", data);
+            let stopId = document.getElementById("stopId").innerHTML;
+            let place = document.getElementById("buttonPlace");
+            place.innerHTML = favoriteFirst + stopId + favoriteSecond;
         },
         error : function(e) {
             console.log("ERROR 12312313: ", e);

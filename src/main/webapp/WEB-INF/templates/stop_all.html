@@ -8,13 +8,19 @@
 
     <div th:replace="fragment :: nav"></div>
 
+    <p style="display: none" id="stopId" th:text="${stop.id}"></p>
     <h1 class="stop-name" th:text="${stop.name}"></h1>
-    <button th:if="${!inFavorites}" th:onclick="'favorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" style="display: inline-block" type="button" class="btn btn-warning fav-button">
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> В избранное
-    </button>
-    <button th:if="${inFavorites}" th:onclick="'unfavorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" style="display: inline-block" type="button" class="btn btn-danger fav-button">
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> В избранное
-    </button>
+
+    <div class="fav-button-container" id="buttonPlace">
+        <button th:if="${!inFavorites}" th:onclick="'favorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-warning fav-button">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> В избранное
+        </button>
+
+        <button th:if="${inFavorites}" th:onclick="'unfavorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-danger fav-button ">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Убрать из избранного
+        </button>
+    </div>
+
 
     <div th:each="rs : ${rStops}">
         <h3 th:text="${'Расписание для ' + rs.route.transport.type.name + ' №' + rs.route.transport.routeNumber}"></h3>

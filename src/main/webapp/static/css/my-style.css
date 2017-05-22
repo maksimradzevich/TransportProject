@@ -31,3 +31,7 @@ body {
 .fav-button {
     margin-top: -20px;
 }
+
+.fav-button-container {
+    display: inline-block;
+}

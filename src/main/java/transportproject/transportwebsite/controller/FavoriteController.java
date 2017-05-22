@@ -26,4 +26,13 @@ public class FavoriteController {
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/unfavorite", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Void> unfavoriteItem(@RequestBody FavoriteItem item) {
+        if (item.getType().equalsIgnoreCase(Stop.class.getSimpleName())) {
+            favoriteService.removeFavoriteStop(item.getId());
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

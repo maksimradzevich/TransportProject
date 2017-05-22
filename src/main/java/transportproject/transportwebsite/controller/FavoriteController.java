@@ -1,15 +1,29 @@
 package transportproject.transportwebsite.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.DriverManager;
+import transportproject.transportwebsite.dto.FavoriteItem;
+import transportproject.transportwebsite.model.transport.Stop;
+import transportproject.transportwebsite.service.FavoriteService;
 
 @RestController
 public class FavoriteController {
-    @PostMapping("favorite/{type}/{id}")
-    public ResponseEntity<Void> favoriteItem(@PathVariable("type") String type, @PathVariable("id") String id) {
 
+    private final FavoriteService favoriteService;
+
+    @Autowired
+    public FavoriteController(FavoriteService favoriteService) {
+        this.favoriteService = favoriteService;
+    }
+
+    @RequestMapping(value = "/favorite", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Void> favoriteItem(@RequestBody FavoriteItem item) {
+        if (item.getType().equalsIgnoreCase(Stop.class.getSimpleName())) {
+            favoriteService.addFavoriteStop(item.getId());
+        }
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

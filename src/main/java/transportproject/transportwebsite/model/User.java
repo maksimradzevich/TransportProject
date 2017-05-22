@@ -1,15 +1,20 @@
 package transportproject.transportwebsite.model;
 
 import org.hibernate.annotations.*;
+import transportproject.transportwebsite.model.transport.Stop;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +22,20 @@ public class User {
     private String email;
     private String password;
     private String role;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_stop",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "stop_id") })
+    private List<Stop > favoriteStops = new ArrayList<Stop>();
+
+    public List<Stop> getFavoriteStops() {
+        return favoriteStops;
+    }
+
+    public void setFavoriteStops(List<Stop> favoriteStops) {
+        this.favoriteStops = favoriteStops;
+    }
 
     public User(String email, String password) {
         this.email = email;
@@ -56,5 +75,29 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (!getId().equals(user.getId())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
+        return result;
     }
 }

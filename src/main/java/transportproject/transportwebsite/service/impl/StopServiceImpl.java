@@ -27,7 +27,7 @@ public class StopServiceImpl implements StopService {
         return mapOfSortedStops;
     }
 
-    static Map<Character, List<Stop>> sortStops(List<Stop> stops) {
+    private static Map<Character, List<Stop>> sortStops(List<Stop> stops) {
 
         final Map<Character, List<Stop>> stopsMap = new TreeMap<>(Character::compareTo);
 
@@ -39,7 +39,9 @@ public class StopServiceImpl implements StopService {
             final char firstLetterOfName = st.getName().toUpperCase().charAt(0);
 
             if (temporaryLetter == firstLetterOfName) {
-                temporaryList.add(st);
+                if (temporaryList != null) {
+                    temporaryList.add(st);
+                }
             } else if (stopsMap.containsKey(firstLetterOfName)) {
                 temporaryLetter = firstLetterOfName;
                 temporaryList = stopsMap.get(temporaryLetter);

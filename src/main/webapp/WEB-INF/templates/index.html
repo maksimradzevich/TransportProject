@@ -7,6 +7,17 @@
 
     <div th:replace="fragment :: nav"></div>
 
+    <div th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}">
+        <div th:if="${favStops.size() > 0}">
+            <h1>Избранные остановки</h1>
+            <ul>
+                <li th:each="stop : ${favStops}">
+                    <a th:href="@{~/stop/{stopId}(stopId=${stop.id})}" th:text="${stop.name}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-xs-6">
             <h1 class="transport-type">Автобусы</h1>

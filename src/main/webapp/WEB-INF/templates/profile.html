@@ -1,10 +1,12 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head th:include="fragment :: head">
 </head>
 <body>
 <div class="container">
     <div th:replace="fragment :: nav"></div>
-    Profile page
+    <h1 sec:authentication="name"></h1>
+    <h3>Избранные остановки</h3>
+    <h3>Избранные маршруты</h3>
     <form th:action="@{/logout}" method="post">
         <button type="submit" class="btn btn-danger">Выйти</button>
     </form>

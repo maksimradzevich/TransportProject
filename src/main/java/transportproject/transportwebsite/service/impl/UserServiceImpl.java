@@ -33,6 +33,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findActiveUser() {
         final String principalEmail = getActiveUserEmail();
-        return userDAO.findByEmail(principalEmail);
+        if (principalEmail != null) {
+            return userDAO.findByEmail(principalEmail);
+        }
+        return null;
     }
 }

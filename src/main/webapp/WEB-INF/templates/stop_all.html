@@ -1,5 +1,5 @@
 <!--<!DOCTYPE html>-->
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head th:include="fragment :: head">
 </head>
 <body>
@@ -7,7 +7,14 @@
 <div class="container">
 
     <div th:replace="fragment :: nav"></div>
-    <h1 th:text="${stop.name}"></h1>
+
+    <h1 class="stop-name" th:text="${stop.name}"></h1>
+    <button th:if="${!inFavorites}" th:onclick="'favorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" style="display: inline-block" type="button" class="btn btn-warning fav-button">
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> В избранное
+    </button>
+    <button th:if="${inFavorites}" th:onclick="'unfavorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" style="display: inline-block" type="button" class="btn btn-danger fav-button">
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> В избранное
+    </button>
 
     <div th:each="rs : ${rStops}">
         <h3 th:text="${'Расписание для ' + rs.route.transport.type.name + ' №' + rs.route.transport.routeNumber}"></h3>

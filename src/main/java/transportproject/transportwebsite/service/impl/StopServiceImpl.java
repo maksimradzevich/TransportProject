@@ -3,6 +3,7 @@ package transportproject.transportwebsite.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import transportproject.transportwebsite.dao.StopDAO;
+import transportproject.transportwebsite.dao.UserDAO;
 import transportproject.transportwebsite.service.StopService;
 import transportproject.transportwebsite.model.transport.Stop;
 
@@ -13,10 +14,12 @@ import java.util.*;
 public class StopServiceImpl implements StopService {
 
     private final StopDAO stopDAO;
+    private final UserDAO userDAO;
 
     @Autowired
-    public StopServiceImpl(StopDAO stopDAO) {
+    public StopServiceImpl(StopDAO stopDAO, UserDAO userDAO) {
         this.stopDAO = stopDAO;
+        this.userDAO = userDAO;
     }
 
     @Override

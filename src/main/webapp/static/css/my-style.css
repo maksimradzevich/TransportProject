@@ -22,3 +22,12 @@ body {
 .ostanovka_name {
     padding-bottom: 10px;
 }
+
+.stop-name {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.fav-button {
+    margin-top: -20px;
+}

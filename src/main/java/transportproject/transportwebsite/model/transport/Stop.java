@@ -23,16 +23,6 @@ public class Stop {
     @OneToMany(mappedBy = "stop")
     private List<RouteStop> routeStops;
 
-//    @ManyToMany
-//    @JoinTable(name = "RouteStop",
-//                joinColumns = {
-//                    @JoinColumn(name = "stop_id")
-//                },
-//                inverseJoinColumns = {
-//                    @JoinColumn(name = "route_id")
-//                })
-//    private List<Route> routes;
-
     public List<RouteStop> getRouteStops() {
         return routeStops;
     }

@@ -78,11 +78,4 @@ public class SpringMvcConfiguration extends WebMvcConfigurerAdapter implements A
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-
-    @Override
-    public String toString() {
-        return "SpringMvcConfiguration{" +
-                "applicationContext=" + applicationContext +
-                '}';
-    }
 }

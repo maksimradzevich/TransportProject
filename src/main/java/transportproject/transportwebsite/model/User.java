@@ -1,6 +1,8 @@
 package transportproject.transportwebsite.model;
 
-import org.hibernate.annotations.*;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import transportproject.transportwebsite.model.transport.Stop;
 
 import javax.persistence.*;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "User")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class User{
 
     @Id

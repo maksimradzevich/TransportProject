@@ -4,21 +4,45 @@ body {
 }
 
 .stop-row {
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 10px;
 }
 
-.transport-type {
-    font-size:20px
-}
+/*.transport-type {*/
+    /*font-size:20px*/
+/*}*/
 
-@media (min-width: 768px) {
-
-    .transport-type {
-        font-size:36px
-    }
+@media (max-width: 768px) {
 }
 
 .ostanovka_name {
     padding-bottom: 10px;
+}
+
+.stop-name {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.fav-button {
+    margin-top: -20px;
+}
+
+.fav-button-container {
+    display: inline-block;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2em;
+}
+h3 {
+    font-size: 1.5em;
+}
+
+.list {
+    margin-top: 0;
 }

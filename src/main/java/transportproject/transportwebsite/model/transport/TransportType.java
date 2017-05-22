@@ -1,8 +1,8 @@
 package transportproject.transportwebsite.model.transport;
 
 public enum TransportType {
-    BUS("автобуса"),
-    TROLLEYBUS("троллейбуса");
+    BUS("автобус"),
+    TROLLEYBUS("троллейбус");
 
     private String name;
 

@@ -16,9 +16,11 @@
 
     <!--my styles-->
     <link href="../../static/css/my-style.css" th:href="@{~/static/css/my-style.css}" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/font-awesome-4.7.0/css/font-awesome.min.css">
     <script th:src="@{~/static/js/choosetab.js}"></script>
     <script src="../../static/js/angular.min.js"></script>
     <script src="../../static/js/reg.js"></script>
+    <script src="../../static/js/testAjax.js"></script>
 </head>
 
 <!--nav-->
@@ -39,16 +41,16 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse in navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#" th:href="@{/}">По номеру машрута <span
+                <li><a href="#" th:href="@{/}"><i class="fa fa-bus" aria-hidden="true"></i>&nbsp;По номеру машрута <span
                         class="sr-only">(current)</span></a></li>
-                <li><a href="#" th:href="@{/stops}">По остановке</a></li>
+                <li><a href="#" th:href="@{/stops}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp;По остановке</a></li>
             </ul>
             <ul th:if="${!#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}" class="nav navbar-nav navbar-right">
                 <li><a href="#" th:href="@{/login}">Вход</a></li>
                 <li><a href="#" th:href="@{/registration}">Регистрация</a></li>
             </ul>
             <ul th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}" class="nav navbar-nav navbar-right">
-                <li><a href="#" th:href="@{/profile}">Профиль</a></li>
+                <li><a href="#" th:href="@{/profile}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Профиль</a></li>
             </ul>
 
         </div><!-- /.navbar-collapse -->

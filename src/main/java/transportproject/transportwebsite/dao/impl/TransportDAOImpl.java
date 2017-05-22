@@ -56,4 +56,18 @@ public class TransportDAOImpl implements TransportDAO {
         Hibernate.initialize(transport.getRoutes());
         return transport;
     }
+
+    @Override
+    public Transport findTransportByRouteNumberAndType(int routeNumber, TransportType transportType) {
+        final Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq(TYPE_FIELD, transportType));
+        criteria.add(Restrictions.eq(ROUTE_NUMBER_FIELD, routeNumber));
+        final Transport transport = (Transport) criteria.uniqueResult();
+        return transport;
+    }
+
+    @Override
+    public Transport findById(int id) {
+        return (Transport) getSession().get(Transport.class, id);
+    }
 }

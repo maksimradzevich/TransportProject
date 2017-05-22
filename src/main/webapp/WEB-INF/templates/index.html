@@ -7,18 +7,39 @@
 
     <div th:replace="fragment :: nav"></div>
 
+    <div class="row" th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}">
+        <div class="col-sm-6" th:if="${favStops.size() > 0}">
+            <h1>Избранные остановки</h1>
+            <ul>
+                <li th:each="stop : ${favStops}">
+                    <h3><a class="text-capitalize" th:href="@{~/stop/{stopId}(stopId=${stop.id})}"
+                           th:text="${stop.name}"></a></h3>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-6" th:if="${favTransport.size() > 0}">
+            <h1>Избранный транспорт</h1>
+            <ul>
+                <li th:each="transport : ${favTransport}">
+                    <h3><a class="text-capitalize"
+                           th:href="@{/transport/{type}/{rNumber}(type = ${transport.type}, rNumber=${transport.routeNumber})}"
+                           th:text="${transport.type.name + ' №' + transport.routeNumber}"></a></h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <h1 class="transport-type">Автобусы</h1>
-            <h3 th:each="bus : ${buses}">
+            <h3 class="list" th:each="bus : ${buses}">
                 <a href="#" th:href="@{/transport/{type}/{rNumber}(type = ${bus.type}, rNumber=${bus.routeNumber})}"
                    th:text="${bus.routeNumber}">1</a>
             </h3>
-
         </div>
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <h1 class="transport-type">Троллейбусы</h1>
-            <h3 th:each="trolleybus : ${trolleybuses}">
+            <h3 class="list" th:each="trolleybus : ${trolleybuses}">
                 <a href="#"
                    th:href="@{/transport/{type}/{rNumber}(type = ${trolleybus.type}, rNumber=${trolleybus.routeNumber})}"
                    th:text="${trolleybus.routeNumber}">12</a>
@@ -29,9 +50,9 @@
     </div>
 
 </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../../static/js/bootstrap.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../static/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-<!--<!DOCTYPE html>-->
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:include="fragment :: head">
 </head>
@@ -9,9 +8,10 @@
 
     <div th:replace="fragment :: nav"></div>
 
-    <h1 th:text="${'Расписание для ' + transportName + ' №' + transportNumber}"></h1>
-    <h3 th:text="${stopName}"></h3>
-    <h3 th:text="${routeName}"></h3>
+    <h1  th:text="${'Расписание для ' + transportName + 'а №' + transportNumber}"></h1>
+
+    <h3 th:text="${'Остановка ' + stop.name}"></h3>
+    <h3 th:text="${'Маршрут ' + routeName}"></h3>
 
     <p style="display: none" id="t" th:utext="${timetable}"></p>
 

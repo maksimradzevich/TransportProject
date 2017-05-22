@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import transportproject.transportwebsite.dao.RouteDAO;
 import transportproject.transportwebsite.dao.RouteStopDAO;
+import transportproject.transportwebsite.dao.TransportDAO;
 import transportproject.transportwebsite.model.transport.Route;
 import transportproject.transportwebsite.model.transport.RouteStop;
+import transportproject.transportwebsite.model.transport.Transport;
 import transportproject.transportwebsite.model.transport.TransportType;
+import transportproject.transportwebsite.service.FavoriteService;
 import transportproject.transportwebsite.service.RouteService;
 import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
@@ -21,12 +24,16 @@ public class RoutesController {
     private final RouteStopDAO routeStopDAO;
     private final RouteDAO routeDAO;
     private final RouteService routeService;
+    private final TransportDAO transportDAO;
+    private final FavoriteService favoriteService;
 
     @Autowired
-    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO, RouteService routeService) {
+    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO, RouteService routeService, TransportDAO transportDAO, FavoriteService favoriteService) {
         this.routeStopDAO = routeStopDAO;
         this.routeDAO = routeDAO;
         this.routeService = routeService;
+        this.transportDAO = transportDAO;
+        this.favoriteService = favoriteService;
     }
 
     @GetMapping(value = "/transport/{type}/{routeNumber}")
@@ -43,6 +50,12 @@ public class RoutesController {
         final List<RouteStop> routeStops1 = routeStopDAO.getRouteStopByRouteId(route1.getRouteId());
         final List<RouteStop> routeStops2 = routeStopDAO.getRouteStopByRouteId(route2.getRouteId());
 
+        final Transport transport = transportDAO.findTransportByRouteNumberAndType(routeNumber, type);
+
+        boolean isInFavorites = favoriteService.isInFavorites(transport);
+        model.addAttribute("inFavorites", isInFavorites);
+
+        model.addAttribute("transport", transport);
         model.addAttribute("routeStops1", routeStops1);
         model.addAttribute("routeStops2", routeStops2);
         model.addAttribute("route1Name", route1Name);

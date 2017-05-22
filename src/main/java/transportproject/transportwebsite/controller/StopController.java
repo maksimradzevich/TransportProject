@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import transportproject.transportwebsite.dao.RouteStopDAO;
 import transportproject.transportwebsite.dao.StopDAO;
+import transportproject.transportwebsite.service.FavoriteService;
 import transportproject.transportwebsite.service.StopService;
 import transportproject.transportwebsite.model.transport.Route;
 import transportproject.transportwebsite.model.transport.RouteStop;
@@ -22,12 +23,14 @@ public class StopController {
     private final StopDAO stopDAO;
     private final RouteStopDAO routeStopDAO;
     private final StopService stopService;
+    private final FavoriteService favoriteService;
 
     @Autowired
-    public StopController(StopDAO stopDAO, RouteStopDAO routeStopDAO, StopService stopService) {
+    public StopController(StopDAO stopDAO, RouteStopDAO routeStopDAO, StopService stopService, FavoriteService favoriteService) {
         this.stopDAO = stopDAO;
         this.routeStopDAO = routeStopDAO;
         this.stopService = stopService;
+        this.favoriteService = favoriteService;
     }
 
     @GetMapping("/stop/{stopId}")
@@ -35,7 +38,8 @@ public class StopController {
 
         List<RouteStop> routeStops = routeStopDAO.getRouteStopsByStopId(stopId);
         final Stop stop = stopDAO.findOne(stopId);
-
+        boolean isInFavorites = favoriteService.isInFavorites(stop);
+        model.addAttribute("inFavorites", isInFavorites);
         model.addAttribute("rStops", routeStops);
         model.addAttribute("stop", stop);
 
@@ -58,7 +62,7 @@ public class StopController {
         model.addAttribute("transportName", nameOfTransport);
         model.addAttribute("transportNumber", routeNumber);
         model.addAttribute("routeName", routeName);
-        model.addAttribute("stopName", stop.getName());
+        model.addAttribute("stop", stop);
         return "stop";
     }
 

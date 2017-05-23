@@ -23,8 +23,8 @@
 
 
     <div th:each="rs : ${rStops}">
-        <h3 th:text="${'Расписание для ' + rs.route.transport.type.name + 'a №' + rs.route.transport.routeNumber}"></h3>
-        <h5 th:text="${rs.route.name}"></h5>
+        <h3 ><i class="fa fa-bus" aria-hidden="true"></i><span th:text="${' Расписание для ' + rs.route.transport.type.name + 'a №' + rs.route.transport.routeNumber}"></span></h3>
+        <h5 ><i class="fa fa-map-signs" aria-hidden="true"></i><span th:text="${' Направление ' + rs.route.name}"></span></h5>
 
         <p style="display: none" th:id="t + ${rs.routeStopId}" id="t" th:utext="${rs.timetable}"></p>
 

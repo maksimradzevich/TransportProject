@@ -24,6 +24,7 @@
     <script src="../../static/js/angular.min.js"></script>
     <script src="../../static/js/reg.js"></script>
     <script src="../../static/js/testAjax.js"></script>
+    <script src="../../static/js/logout.js"></script>
 </head>
 
 <!--nav-->
@@ -54,7 +55,17 @@
                 <li><a href="#" th:href="@{/registration}">Регистрация</a></li>
             </ul>
             <ul th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}" class="nav navbar-nav navbar-right">
-                <li><a href="#" th:href="@{/profile}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Профиль</a></li>
+                <li><a href="#" th:href="@{/profile}"></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Профиль<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Изменить пароль</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a onclick="logout()">Выйти</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

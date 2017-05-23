@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -44,6 +45,7 @@ public class TransportDAOImpl implements TransportDAO {
     public List<Transport> findTransportByType(TransportType transportType) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq(TYPE_FIELD, transportType));
+        criteria.addOrder(Order.asc(ROUTE_NUMBER_FIELD));
         return criteria.list();
     }
 

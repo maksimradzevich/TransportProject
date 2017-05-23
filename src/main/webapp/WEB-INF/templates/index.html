@@ -12,7 +12,7 @@
             <h1>Избранные остановки</h1>
             <ul>
                 <li th:each="stop : ${favStops}">
-                    <h3><a class="text-capitalize" th:href="@{~/stop/{stopId}(stopId=${stop.id})}"
+                    <h3 class="list"><a class="text-capitalize" th:href="@{~/stop/{stopId}(stopId=${stop.id})}"
                            th:text="${stop.name}"></a></h3>
                 </li>
             </ul>
@@ -21,7 +21,7 @@
             <h1>Избранный транспорт</h1>
             <ul>
                 <li th:each="transport : ${favTransport}">
-                    <h3><a class="text-capitalize"
+                    <h3 class="list"><a class="text-capitalize"
                            th:href="@{/transport/{type}/{rNumber}(type = ${transport.type}, rNumber=${transport.routeNumber})}"
                            th:text="${transport.type.name + ' №' + transport.routeNumber}"></a></h3>
                 </li>
@@ -31,9 +31,9 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <h1 class="transport-type">Автобусы</h1>
+            <h1 >Автобусы</h1>
             <div class="row">
-                <div class="col-xs-1" th:each="bus : ${buses}">
+                <div class="col-xs-2 col-sm-1" th:each="bus : ${buses}">
                     <h3 class="list" >
                         <a href="#" th:href="@{/transport/{type}/{rNumber}(type = ${bus.type}, rNumber=${bus.routeNumber})}"
                            th:text="${bus.routeNumber}">1</a>
@@ -54,10 +54,7 @@
                     </h3>
                 </div>
             </div>
-
-
         </div>
-
     </div>
 
 </div>

@@ -46,3 +46,10 @@ h3 {
 .list {
     margin-top: 0;
 }
+
+.transport-number {
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-width: 5%;
+}

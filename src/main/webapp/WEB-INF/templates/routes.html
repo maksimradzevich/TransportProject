@@ -8,7 +8,7 @@
 
     <div th:replace="fragment :: nav"></div>
 
-    <h1  class="stop-name" th:text="${'Маршруты для ' + transport.type.name + ' №' + transport.routeNumber}"></h1>
+    <h1  class="stop-name" th:text="${'Маршруты для ' + transport.type.name + 'а №' + transport.routeNumber}"></h1>
 
     <p style="display: none" id="id" th:text="${transport.id}"></p>
 
@@ -24,14 +24,14 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <h2 class="transport-type" th:text="${route1Name}">СШ 13 -- СШ 13</h2>
             <h3 th:each="routeStop : ${routeStops1}">
                 <a href="#" th:href="@{/stop/{stopId}/{routeId}(stopId = ${routeStop.stop.id}, routeId = ${routeStop.route.routeId})}" th:text="${routeStop.stop.name}">1</a>
             </h3>
 
         </div>
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <h2 class="transport-type" th:text="${route2Name}">СШ 13 -- СШ 13</h2>
             <h3 th:each="routeStop : ${routeStops2}">
                 <a href="#" th:href="@{/stop/{stopId}/{routeId}(stopId = ${routeStop.stop.id}, routeId = ${routeStop.route.routeId})}" th:text="${routeStop.stop.name}">12</a>

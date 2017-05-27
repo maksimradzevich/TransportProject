@@ -45,10 +45,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#" th:href="@{/}"><i class="fa fa-bus" aria-hidden="true"></i>&nbsp;По номеру машрута <span
-                        class="sr-only">(current)</span></a></li>
-                <li><a href="#" th:href="@{/stops}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp;По остановке</a></li>
-                <li><a class="text-danger" th:href="@{/comment}"><i class="fa fa-vk" aria-hidden="true"></i> Сообщить обошибке</a></li>
+                <li><a href="#" th:href="@{/}"><i class="fa fa-bus" aria-hidden="true"></i>&nbsp;Машруты<span class="sr-only">(current)</span></a></li>
+                <li><a href="#" th:href="@{/stops}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp;Остановки</a></li>
+                <li><a class="text-danger" th:href="@{/comment}"><i class="fa fa-bug" aria-hidden="true"></i> Сообщить об ошибке</a></li>
             </ul>
             <ul th:if="${!#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}"
                 class="nav navbar-nav navbar-right">

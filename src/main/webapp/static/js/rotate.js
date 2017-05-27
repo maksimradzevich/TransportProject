@@ -29,4 +29,5 @@ function func() {
 
 document.addEventListener('DOMContentLoaded', function() {
     func();
+    // window.onresize = func();
 }, false);

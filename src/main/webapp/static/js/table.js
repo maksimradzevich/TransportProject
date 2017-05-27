@@ -15,22 +15,82 @@ function addTable(index) {
         tableOfTimetable = createTableFromTableLol(tableOfTimetable.documentElement);
         tableOfTimetable.className = "table table-bordered";
         document.getElementById("timetable" + index).appendChild(tableOfTimetable);
-        tableBody = tableOfTimetable.documentElement.childNodes[0];
+        tableBody = tableOfTimetable.childNodes[0];
     }
-    runTimer(tableBody);
+    runTimer(tableBody, index);
 }
 
-function isEmptyMinute(hourTd) {
+function runTimer(table, index) {
+    var hoursRow = table.childNodes[0].childNodes;
+    var weekDayRow = table.childNodes[1].childNodes;
+    var weekEndRow = weekDayRow;
+    var onlyWeekDay = false;
+    if (table.childNodes[2] !== undefined) {
+        weekEndRow = table.childNodes[2].childNodes;
+    } else {
+        onlyWeekDay = true;
+    }
+    var arrayOfWeekdayTime = createArrayOfTime(hoursRow, weekDayRow);
+    var arrayOfWeekendTime = createArrayOfTime(hoursRow, weekEndRow);
+
+    showTimer(arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay, index);
+    setInterval(showTimer, 60000, arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay, index);
+}
+
+function getDiffTimeString(nextTime, timer) {
+    var date = new Date();
+    console.dir("Время сейчас " + date);
+    var millisecondsDiff = nextTime.getTime() - date.getTime();
+    var minutes = Math.ceil(millisecondsDiff / 60000);
+    console.dir("Минуты с округлением " + minutes);
+
+    var str;
+    if (minutes < 60) {
+        str = minutes + " мин.";
+    } else if (minutes >= 60 && minutes < 1440 ) {
+        var hours = minutes / 60 | 0;
+        var minutesNew = minutes - hours * 60;
+        str = hours + " ч. " + minutesNew + " мин.";
+    } else {
+        var days = minutes / 1440 | 0;
+        var hours = (minutes - (days * 1440)) / 60 | 0;
+        var minutesNew = (minutes - (days * 1440) - hours * 60);
+        str = days + " дн. " + hours + " ч. " + minutesNew + " мин.";
+    }
+
+    timer.innerHTML = str;
+
+    if (minutes < 10) {
+        timer.className = "label label-danger";
+    } else if (minutes >= 10 && minutes <= 20) {
+        timer.className = "label label-warning";
+    } else {
+        timer.className = "label label-success";
+    }
+
+}
+function showTimer(arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay, index) {
+    var nextTime = computeNextTime(arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay);
+    console.dir("Время следующего прибытия: " + nextTime);
+    var timer = document.getElementById("time" + index);
+
+    getDiffTimeString(nextTime, timer);
+}
+
+function isEmptyCell(hourTd) {
     return hourTd == "" || hourTd == "null";
 }
+
 function createArrayOfTime(hoursRow, minutesRow) {
     var arrayOfTimes = [];
     for (var i = 1; i < hoursRow.length; i++) {
         var hourTd = hoursRow[i];
-        if (!isEmptyMinute(hourTd)) {
-            var hour = hourTd.innerHTML;
-            var minutes = minutesRow[i].innerHTML.split(" ");
-            for (var j = 1; j < minutes.length; j++) {
+        var minuteString = minutesRow[i].innerHTML;
+        var hourString = hourTd.innerHTML;
+        if (!isEmptyCell(hourString) && !isEmptyCell(minuteString)) {
+            var hour = hourString;
+            var minutes = minuteString.split(" ");
+            for (var j = 0; j < minutes.length; j++) {
                 arrayOfTimes.push({
                     hour: +hour,
                     minute: +minutes[j]
@@ -46,48 +106,10 @@ function isWeekDay() {
     return date.getDay() != 0 && date.getDay() != 6;
 }
 
-function isHourExactOrNext(timeObject, temporaryHour, temporaryMinutes) {
-    return timeObject.hour >= temporaryHour && timeObject.minute >= temporaryMinutes;
-}
-function midnightCase(timeObject, temporaryHour, temporaryMinutes) {
-    return temporaryHour > timeObject.hour;
-}
-function isLeftToday(arrayOfWeekDayTime, temporaryHour, temporaryMinutes) {
-    for (var i = 0; i < arrayOfWeekDayTime.length; i++) {
-        var timeObject = arrayOfWeekDayTime[i];
-        if (timeObject.hour > temporaryHour) {
-            return true;
-        } else if (timeObject.hour == temporaryHour && timeObject.minute >= temporaryMinutes) {
-            return true;
-        }
-    }
-    return false;
-}
-function computeNextTime(arrayOfWeekDayTime) {
-    var date = new Date();
-    var currentHour = date.getHours();
-    var minutes = date.getMinutes();
-    var temporaryHour = currentHour;
-    var temporaryMinutes = minutes;
-    var nextHour;
-    var nextMinute;
-    var nextDay = false;
-    for (var i = 0; i < arrayOfWeekDayTime.length; i++) {
-        var timeObject = arrayOfWeekDayTime[i];
-        if (isHourExactOrNext(timeObject, temporaryHour, temporaryMinutes) ) {
-            nextHour = timeObject.hour;
-            nextMinute = timeObject.minute;
-        } else if (midnightCase(timeObject, temporaryHour, temporaryMinutes) && !isLeftToday(arrayOfWeekDayTime, temporaryHour, temporaryMinutes)) {
-            nextHour = timeObject.hour;
-            nextMinute = timeObject.minute;
-            nextDay = true;
-        }
-    }
-
-}
 function isFriday() {
     return new Date().getDay() == 5;
 }
+
 function isSunday() {
     return new Date().getDay() == 0;
 }
@@ -99,15 +121,16 @@ function defineNextTime(firstTimeArray, currentHour, currentMinutes) {
         if (currentHour == 23 && timeObject.hour < currentHour) {
             nextTimeDate = new Date();
             nextTimeDate.setDate(nextTimeDate.getDate() + 1);
-            nextTimeDate.setHours(timeObject.hour, timeObject.minute);
+            nextTimeDate.setHours(timeObject.hour, timeObject.minute, 0, 0);
             return nextTimeDate;
-        } else if (timeObject.hour >= currentHour && timeObject.minute >= currentMinutes) {
+        } else if (timeObject.hour > currentHour || (timeObject.hour == currentHour && timeObject.minute >= currentMinutes)) {
             nextTimeDate = new Date();
-            nextTimeDate.setHours(timeObject.hour, timeObject.minute);
+            nextTimeDate.setHours(timeObject.hour, timeObject.minute, 0, 0);
             return nextTimeDate;
         }
     }
 }
+
 function findNextTimeInArrays(firstTimeArray, secondTimeArray) {
     var currentHour = new Date().getHours();
     var currentMinutes = new Date().getMinutes();
@@ -115,31 +138,39 @@ function findNextTimeInArrays(firstTimeArray, secondTimeArray) {
     nextTimeDate = defineNextTime(firstTimeArray, currentHour, currentMinutes);
     if (nextTimeDate === undefined) {
         nextTimeDate = defineNextTime(secondTimeArray, currentHour, currentMinutes);
+        if (nextTimeDate === undefined) {
+            nextTimeDate = new Date();
+            nextTimeDate.setHours(secondTimeArray[0].hour, secondTimeArray[0].minute, 0, 0);
+        }
         nextTimeDate.setDate(nextTimeDate.getDate() + 1);
     }
+
+    return nextTimeDate;
 }
-function computeNextTime(arrayOfWeekdayTime, arrayOfWeekendTime) {
+
+function computeNextTime(arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay) {
+    var nextTime = undefined;
     if (isWeekDay()) {
         if (isFriday()) {
-            return findNextTimeInArrays(arrayOfWeekdayTime, arrayOfWeekendTime);
+            nextTime = findNextTimeInArrays(arrayOfWeekdayTime, arrayOfWeekendTime);
         } else {
-            return findNextTimeInArrays(arrayOfWeekdayTime, arrayOfWeekdayTime);
+            nextTime = findNextTimeInArrays(arrayOfWeekdayTime, arrayOfWeekdayTime);
         }
     } else {
         if (isSunday()) {
-            return findNextTimeInArrays(arrayOfWeekendTime, arrayOfWeekdayTime);
+            nextTime = findNextTimeInArrays(arrayOfWeekendTime, arrayOfWeekdayTime);
         } else {
-            return findNextTimeInArrays(arrayOfWeekendTime, arrayOfWeekendTime);
+            nextTime = findNextTimeInArrays(arrayOfWeekendTime, arrayOfWeekendTime);
         }
     }
-}
-function runTimer(table) {
-    var hoursRow = table.childNodes[0].childNodes;
-    var weekDayRow = table.childNodes[1].childNodes;
-    var weekEndRow = table.childNodes[2].childNodes;
-    var arrayOfWeekdayTime = createArrayOfTime(hoursRow, weekDayRow);
-    var arrayOfWeekendTime = createArrayOfTime(hoursRow, weekEndRow);
-    var arrayOfNextTime = computeNextTime(arrayOfWeekdayTime, arrayOfWeekendTime);
+
+    if (onlyWeekDay) {
+        while (nextTime.getDay() == 0 || nextTime.getDay() == 6) {
+            nextTime.setDate(nextTime.getDate() + 1);
+        }
+    }
+
+    return nextTime;
 }
 
 function createTableFromTableLol(tableWrong) {

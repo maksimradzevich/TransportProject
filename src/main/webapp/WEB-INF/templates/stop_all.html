@@ -24,6 +24,7 @@
 
     <div th:each="rs : ${rStops}">
         <h3 ><i class="fa fa-bus" aria-hidden="true"></i><span th:text="${' Расписание для ' + rs.route.transport.type.name + 'a №' + rs.route.transport.routeNumber}"></span></h3>
+        <h5><i class="fa fa-clock-o" aria-hidden="true"></i><span> Осталось </span><span th:id="time + ${rs.routeStopId}"></span></h5>
         <h5 ><i class="fa fa-map-signs" aria-hidden="true"></i><span th:text="${' Направление ' + rs.route.name}"></span></h5>
 
         <p style="display: none" th:id="t + ${rs.routeStopId}" id="t" th:utext="${rs.timetable}"></p>

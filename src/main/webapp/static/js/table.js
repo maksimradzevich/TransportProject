@@ -17,6 +17,8 @@ function addTable(index) {
         document.getElementById("timetable" + index).appendChild(tableOfTimetable);
         tableBody = tableOfTimetable.childNodes[0];
     }
+
+    tableBody = angular.copy(tableBody);
     runTimer(tableBody, index);
 }
 

@@ -22,6 +22,8 @@
     </div>
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <div th:each="rs : ${rStops}">
         <h3 ><i class="fa fa-bus" aria-hidden="true"></i><span th:text="${' Расписание для ' + rs.route.transport.type.name + 'a №' + rs.route.transport.routeNumber}"></span></h3>
         <h5><i class="fa fa-clock-o" aria-hidden="true"></i><span> Осталось </span><span th:id="time + ${rs.routeStopId}"></span></h5>
@@ -38,7 +40,6 @@
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../../static/js/bootstrap.min.js"></script>
 <script src="../../static/js/rotate.js"></script>

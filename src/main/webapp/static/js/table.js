@@ -121,7 +121,7 @@ function defineNextTime(firstTimeArray, currentHour, currentMinutes) {
     var nextTimeDate = undefined;
     for (var i = 0; i < firstTimeArray.length; i++) {
         var timeObject = firstTimeArray[i];
-        if (currentHour == 23 && timeObject.hour < currentHour) {
+        if (currentHour == 23 && $.inArray(timeObject.hour, [0,1,2,3,4]) == 1) {
             nextTimeDate = new Date();
             nextTimeDate.setDate(nextTimeDate.getDate() + 1);
             nextTimeDate.setHours(timeObject.hour, timeObject.minute, 0, 0);

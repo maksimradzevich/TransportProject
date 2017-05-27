@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+      lang="en">
 
 
 <!--head-->
@@ -47,20 +47,25 @@
             <ul class="nav navbar-nav">
                 <li><a href="#" th:href="@{/}"><i class="fa fa-bus" aria-hidden="true"></i>&nbsp;По номеру машрута <span
                         class="sr-only">(current)</span></a></li>
-                <li><a href="#" th:href="@{/stops}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp;По остановке</a></li>
-                <li><a class="text-danger" href="https://vk.me/transportproject"><i class="fa fa-vk" aria-hidden="true"></i> Сообщить об ошибке</a></li>
+                <li><a href="#" th:href="@{/stops}"><span class="glyphicon glyphicon-map-marker"
+                                                          aria-hidden="true"></span>&nbsp;По остановке</a></li>
+                <li><a class="text-danger" href="https://vk.me/transportproject"><i class="fa fa-vk"
+                                                                                    aria-hidden="true"></i> Сообщить об
+                    ошибке</a></li>
             </ul>
-            <ul th:if="${!#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}" class="nav navbar-nav navbar-right">
+            <ul th:if="${!#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}"
+                class="nav navbar-nav navbar-right">
                 <li><a href="#" th:href="@{/login}">Вход</a></li>
                 <li><a href="#" th:href="@{/registration}">Регистрация</a></li>
             </ul>
-            <ul th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}" class="nav navbar-nav navbar-right">
+            <ul th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}"
+                class="nav navbar-nav navbar-right">
                 <li><a href="#" th:href="@{/profile}"></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Профиль<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Профиль<span
+                            class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Изменить пароль</a></li>
-                        <li role="separator" class="divider"></li>
                         <li>
                             <a onclick="logout()">Выйти</a>
                         </li>
@@ -69,6 +74,5 @@
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
-    <!-- VK Widget -->
 </nav>
 </html>

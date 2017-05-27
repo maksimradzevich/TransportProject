@@ -39,10 +39,11 @@ function runTimer(table, index) {
 
 function getDiffTimeString(nextTime, timer) {
     var date = new Date();
-    console.dir("Время сейчас " + date);
+    console.dir(" -- Время сейчас " + date);
+    console.dir(" -- Время прибытия" + nextTime);
     var millisecondsDiff = nextTime.getTime() - date.getTime();
-    var minutes = Math.ceil(millisecondsDiff / 60000);
-    console.dir("Минуты с округлением " + minutes);
+    var minutes = Math.floor(millisecondsDiff / 60000);
+    console.dir(" -- Минуты с округлением " + minutes);
 
     var str;
     if (minutes < 60) {
@@ -123,7 +124,7 @@ function defineNextTime(firstTimeArray, currentHour, currentMinutes) {
             nextTimeDate.setDate(nextTimeDate.getDate() + 1);
             nextTimeDate.setHours(timeObject.hour, timeObject.minute, 0, 0);
             return nextTimeDate;
-        } else if (timeObject.hour > currentHour || (timeObject.hour == currentHour && timeObject.minute >= currentMinutes)) {
+        } else if (timeObject.hour > currentHour || (timeObject.hour == currentHour && timeObject.minute > currentMinutes)) {
             nextTimeDate = new Date();
             nextTimeDate.setHours(timeObject.hour, timeObject.minute, 0, 0);
             return nextTimeDate;

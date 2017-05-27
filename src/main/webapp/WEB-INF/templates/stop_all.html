@@ -29,7 +29,7 @@
 
         <p style="display: none" th:id="t + ${rs.routeStopId}" id="t" th:utext="${rs.timetable}"></p>
 
-        <div id="timetable" th:id="timetable + ${rs.routeStopId}"></div>
+        <div id="timetable" class="table-responsive" th:id="timetable + ${rs.routeStopId}"></div>
         <script type="text/javascript" th:text="'addTable(' + ${rs.routeStopId} + ')'">
 
         </script>

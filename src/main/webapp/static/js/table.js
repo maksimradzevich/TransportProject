@@ -72,7 +72,7 @@ function getDiffTimeString(nextTime, timer) {
         str = days + " дн. " + hours + " ч. " + minutesNew + " мин.";
     }
 
-    timer.innerHTML = str;
+    timer.innerHTML = str + " (" + nextTime.toTimeString().substring(0, 5)+ ")";
 
     if (minutes < 10) {
         timer.className = "label label-danger";
@@ -194,9 +194,11 @@ function createTableFromTableLol(tableWrong) {
 
     var tbodyNode = tableWrong.childNodes[0];
 
-    for (var trNode of tbodyNode.childNodes) {
+    for (var i = 0; i < tbodyNode.childNodes.length; i++) {
+        var trNode = tbodyNode.childNodes[i];
         var tableRow = document.createElement("TR");
-        for (var tdNode of trNode.childNodes) {
+        for (var j = 0; j < trNode.childNodes.length; j++) {
+            var tdNode = trNode.childNodes[j];
             var text = document.createTextNode(tdNode.innerHTML);
             var tableCell = document.createElement("TD");
             tableCell.appendChild(text);

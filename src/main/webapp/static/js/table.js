@@ -35,8 +35,19 @@ function runTimer(table, index) {
     var arrayOfWeekdayTime = createArrayOfTime(hoursRow, weekDayRow);
     var arrayOfWeekendTime = createArrayOfTime(hoursRow, weekEndRow);
 
+    console.log("Будни: " + arrayOfWeekdayTime);
+    console.log("Выходные: " + arrayOfWeekendTime);
     showTimer(arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay, index);
-    setInterval(showTimer, 60000, arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay, index);
+    var now = new Date();
+    var date = new Date();
+    date.setMinutes(date.getMinutes() + 1);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    setTimeout(function () {
+        showTimer(arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay, index);
+        setInterval(showTimer, 60000, arrayOfWeekdayTime, arrayOfWeekendTime, onlyWeekDay, index);
+    }, date.getTime() - now.getTime());
+
 }
 
 function getDiffTimeString(nextTime, timer) {
@@ -44,13 +55,13 @@ function getDiffTimeString(nextTime, timer) {
     console.dir(" -- Время сейчас " + date);
     console.dir(" -- Время прибытия" + nextTime);
     var millisecondsDiff = nextTime.getTime() - date.getTime();
-    var minutes = Math.floor(millisecondsDiff / 60000);
+    var minutes = Math.ceil(millisecondsDiff / 60000);
     console.dir(" -- Минуты с округлением " + minutes);
 
     var str;
     if (minutes < 60) {
         str = minutes + " мин.";
-    } else if (minutes >= 60 && minutes < 1440 ) {
+    } else if (minutes >= 60 && minutes < 1440) {
         var hours = minutes / 60 | 0;
         var minutesNew = minutes - hours * 60;
         str = hours + " ч. " + minutesNew + " мин.";
@@ -121,7 +132,7 @@ function defineNextTime(firstTimeArray, currentHour, currentMinutes) {
     var nextTimeDate = undefined;
     for (var i = 0; i < firstTimeArray.length; i++) {
         var timeObject = firstTimeArray[i];
-        if (currentHour == 23 && $.inArray(timeObject.hour, [0,1,2,3,4]) == 1) {
+        if (currentHour == 23 && $.inArray(timeObject.hour, [0, 1, 2, 3, 4]) == 1) {
             nextTimeDate = new Date();
             nextTimeDate.setDate(nextTimeDate.getDate() + 1);
             nextTimeDate.setHours(timeObject.hour, timeObject.minute, 0, 0);
@@ -140,11 +151,11 @@ function findNextTimeInArrays(firstTimeArray, secondTimeArray) {
     var nextTimeDate;
     nextTimeDate = defineNextTime(firstTimeArray, currentHour, currentMinutes);
     if (nextTimeDate === undefined) {
-        nextTimeDate = defineNextTime(secondTimeArray, currentHour, currentMinutes);
-        if (nextTimeDate === undefined) {
+        // nextTimeDate = defineNextTime(secondTimeArray, currentHour, currentMinutes);
+        // if (nextTimeDate === undefined) {
             nextTimeDate = new Date();
             nextTimeDate.setHours(secondTimeArray[0].hour, secondTimeArray[0].minute, 0, 0);
-        }
+        // }
         nextTimeDate.setDate(nextTimeDate.getDate() + 1);
     }
 

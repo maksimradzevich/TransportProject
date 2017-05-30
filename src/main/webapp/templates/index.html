@@ -7,9 +7,6 @@
 
     <div th:replace="fragment :: nav"></div>
 
-
-
-
     <div class="row" th:if="${#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}">
         <div class="col-sm-6" th:if="${favStops.size() > 0}">
             <h1>Избранные остановки</h1>

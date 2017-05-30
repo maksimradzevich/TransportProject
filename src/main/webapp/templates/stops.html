@@ -1,0 +1,32 @@
+<!--<!DOCTYPE html>-->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:include="fragment :: head">
+</head>
+<body>
+
+
+<div class="container">
+
+    <div th:replace="fragment :: nav">
+
+    </div>
+
+    <div class="row" th:each="entry : ${stops}">
+        <div class="col-xs-12 col-sm-1">
+            <h1 th:text="${entry.key}">#</h1>
+        </div>
+        <div class="row col-xs-12 col-sm-11 stop-row">
+            <div class="col-xs-12 col-sm-4 ostanovka_name" th:each="stop : ${entry.value}">
+                <h3 class="list"><a th:href="@{/stop/{stopId}(stopId = ${stop.id})}" th:text="${stop.name}">остановк Первая остановк</a></h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../static/js/bootstrap.min.js"></script>
+</body>
+</html>

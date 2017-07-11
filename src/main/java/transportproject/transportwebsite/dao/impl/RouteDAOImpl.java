@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository("routeDAO")
 @Transactional
-public class RouteDAOImpl  {
+public class RouteDAOImpl {
 
     private final SessionFactory sessionFactory;
 
@@ -32,8 +32,6 @@ public class RouteDAOImpl  {
         return getSession().createCriteria(Route.class);
     }
 
-
-    @Override
     public List<Route> getRoutesByRouteNumberAndTransportType(Integer routeNumber, TransportType transportType) {
 
         final Criteria entityCriteria = createEntityCriteria();

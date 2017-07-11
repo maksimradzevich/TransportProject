@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository("routeDAO")
 @Transactional
-public class RouteDAOImpl implements RouteDAO {
+public class RouteDAOImpl  {
 
     private final SessionFactory sessionFactory;
 

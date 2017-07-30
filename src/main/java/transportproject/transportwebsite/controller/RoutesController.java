@@ -18,6 +18,7 @@ import transportproject.transportwebsite.dto.TransportDTO;
 import transportproject.transportwebsite.dto.TransportType;
 import transportproject.transportwebsite.service.RouteService;
 import transportproject.transportwebsite.service.UserService;
+import transportproject.transportwebsite.service.UserWithFavoritesService;
 import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
 import java.util.List;
@@ -29,11 +30,11 @@ public class RoutesController {
     private final RouteDAO routeDAO;
     private final RouteService routeService;
     private final TransportDTODAO transportDTODAO;
-    private final UserService userService;
+    private final UserWithFavoritesService userService;
     private final StopDTODAO stopDTODAO;
 
     @Autowired
-    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO, RouteService routeService, TransportDTODAO transportDTODAO, UserService userService, StopDTODAO stopDTODAO) {
+    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO, RouteService routeService, TransportDTODAO transportDTODAO, UserWithFavoritesService userService, StopDTODAO stopDTODAO) {
         this.routeStopDAO = routeStopDAO;
         this.routeDAO = routeDAO;
         this.routeService = routeService;
@@ -59,11 +60,7 @@ public class RoutesController {
 
         final TransportDTO transportDTO = transportDTODAO.findTransportByRouteNumberAndType(routeNumber, type);
 
-        final UserWithFavorites user = new UserWithFavoritesImpl(
-                userService.findActiveUser(),
-                stopDTODAO,
-                transportDTODAO
-        );
+        final UserWithFavorites user = userService.findActiveUser();
         boolean isInFavorites = user.isInFavorites(new Transport(transportDTO));
         model.addAttribute("inFavorites", isInFavorites);
 

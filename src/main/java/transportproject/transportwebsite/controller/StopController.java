@@ -9,9 +9,7 @@ import transportproject.transportwebsite.business.stop.Stop;
 import transportproject.transportwebsite.business.stop.StopsAsSortedMap;
 import transportproject.transportwebsite.business.stop.StopsAsSortedMapImpl;
 import transportproject.transportwebsite.business.stop.StopsImpl;
-import transportproject.transportwebsite.business.user.UserImpl;
 import transportproject.transportwebsite.business.user.UserWithFavorites;
-import transportproject.transportwebsite.business.user.UserWithFavoritesImpl;
 import transportproject.transportwebsite.dao.RouteStopDAO;
 import transportproject.transportwebsite.dao.StopDTODAO;
 import transportproject.transportwebsite.dao.TransportDTODAO;
@@ -19,7 +17,7 @@ import transportproject.transportwebsite.dto.RouteDTO;
 import transportproject.transportwebsite.dto.RouteStop;
 import transportproject.transportwebsite.dto.StopDTO;
 import transportproject.transportwebsite.dto.TransportDTO;
-import transportproject.transportwebsite.service.UserService;
+import transportproject.transportwebsite.service.UserWithFavoritesService;
 import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
 import java.util.List;
@@ -30,15 +28,13 @@ public class StopController {
 
     private final StopDTODAO stopDTODAO;
     private final RouteStopDAO routeStopDAO;
-    private final UserService userService;
-    private final TransportDTODAO transportDTODAO;
+    private final UserWithFavoritesService userService;
 
     @Autowired
-    public StopController(StopDTODAO stopDTODAO, RouteStopDAO routeStopDAO, UserService userService, TransportDTODAO transportDTODAO) {
+    public StopController(StopDTODAO stopDTODAO, RouteStopDAO routeStopDAO, UserWithFavoritesService userService) {
         this.stopDTODAO = stopDTODAO;
         this.routeStopDAO = routeStopDAO;
         this.userService = userService;
-        this.transportDTODAO = transportDTODAO;
     }
 
     @GetMapping("/stop/{stopId}")
@@ -49,11 +45,7 @@ public class StopController {
         final UserWithFavorites user;
         boolean isInFavorites = false;
         try {
-            user = new UserWithFavoritesImpl(
-                    userService.findActiveUser(),
-                    stopDTODAO,
-                    transportDTODAO
-            );
+            user = userService.findActiveUser();
             isInFavorites = user.isInFavorites(new Stop(stopDTO));
         } catch (NotFoundException e) {
             //TODO add something here

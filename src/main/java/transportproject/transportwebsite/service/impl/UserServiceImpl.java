@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import transportproject.transportwebsite.business.user.User;
 import transportproject.transportwebsite.business.user.UserImpl;
 import transportproject.transportwebsite.dao.StopDTODAO;
 import transportproject.transportwebsite.dao.TransportDTODAO;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserImpl findActiveUser() throws NotFoundException {
+    public User findActiveUser() throws NotFoundException {
         String email = getActiveUserEmail();
         final UserDTO userDTO = findUserDTOByEmail(email);
         return new UserImpl(userDTO, userDTODAO);

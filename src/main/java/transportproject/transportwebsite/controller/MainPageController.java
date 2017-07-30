@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import transportproject.transportwebsite.dao.TransportDAO;
-import transportproject.transportwebsite.dao.UserDAO;
-import transportproject.transportwebsite.model.User;
-import transportproject.transportwebsite.model.transport.Stop;
-import transportproject.transportwebsite.model.transport.Transport;
-import transportproject.transportwebsite.model.transport.TransportType;
+import transportproject.transportwebsite.dao.TransportDTODAO;
+import transportproject.transportwebsite.dao.UserDTODAO;
+import transportproject.transportwebsite.dto.UserDTO;
+import transportproject.transportwebsite.dto.StopDTO;
+import transportproject.transportwebsite.dto.TransportDTO;
+import transportproject.transportwebsite.dto.TransportType;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
@@ -25,13 +25,13 @@ public class MainPageController {
     private static final String MAIN_PAGE_MAPPING = "/";
 
 
-    private final TransportDAO transportDAO;
-    private final UserDAO userDAO;
+    private final TransportDTODAO transportDTODAO;
+    private final UserDTODAO userDTODAO;
 
     @Autowired
-    public MainPageController(TransportDAO transportDAO, UserDAO userDAO) {
-        this.transportDAO = transportDAO;
-        this.userDAO = userDAO;
+    public MainPageController(TransportDTODAO transportDTODAO, UserDTODAO userDTODAO) {
+        this.transportDTODAO = transportDTODAO;
+        this.userDTODAO = userDTODAO;
     }
 
     /**
@@ -42,19 +42,19 @@ public class MainPageController {
     @GetMapping(MAIN_PAGE_MAPPING)
     public String mainPage(Model model, Principal principal) {
 
-        List<Stop> favoriteStops = new ArrayList<>();
-        List<Transport> favoriteTransport = new ArrayList<>();
-        final List<Transport> buses = transportDAO.findTransportByType(TransportType.BUS);
-        final List<Transport> trolleybuses = transportDAO.findTransportByType(TransportType.TROLLEYBUS);
+        List<StopDTO> favoriteStopDTOS = new ArrayList<>();
+        List<TransportDTO> favoriteTransportDTO = new ArrayList<>();
+        final List<TransportDTO> buses = transportDTODAO.findTransportByType(TransportType.BUS);
+        final List<TransportDTO> trolleybuses = transportDTODAO.findTransportByType(TransportType.TROLLEYBUS);
         if (principal != null) {
-            final User user = userDAO.findByEmail(principal.getName());
-            favoriteStops = user.getFavoriteStops();
-            Hibernate.initialize(favoriteStops);
-            favoriteTransport = user.getFavoriteTransport();
-            Hibernate.initialize(favoriteTransport);
+            final UserDTO userDTO = userDTODAO.findByEmail(principal.getName());
+            favoriteStopDTOS = userDTO.getFavoriteStopDTOS();
+            Hibernate.initialize(favoriteStopDTOS);
+            favoriteTransportDTO = userDTO.getFavoriteTransportDTO();
+            Hibernate.initialize(favoriteTransportDTO);
         }
-        model.addAttribute("favStops", favoriteStops);
-        model.addAttribute("favTransport", favoriteTransport);
+        model.addAttribute("favStops", favoriteStopDTOS);
+        model.addAttribute("favTransport", favoriteTransportDTO);
         model.addAttribute("buses", buses);
         model.addAttribute("trolleybuses",trolleybuses);
         return MAIN_PAGE_TEMPLATE;

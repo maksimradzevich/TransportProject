@@ -1,4 +1,4 @@
-package transportproject.transportwebsite.model.transport;
+package transportproject.transportwebsite.dto;
 
 import org.hibernate.annotations.*;
 
@@ -18,11 +18,11 @@ public class RouteStop {
 
     @ManyToOne
     @JoinColumn(name = "route_id")
-    private Route route;
+    private RouteDTO routeDTO;
 
     @ManyToOne
     @JoinColumn(name = "stop_id")
-    private Stop stop;
+    private StopDTO stopDTO;
 
     @Column(name = "timetable", length = 4000)
     private String timetable;
@@ -43,28 +43,28 @@ public class RouteStop {
         this.routeStopId = routeStopId;
     }
 
-    public Route getRoute() {
+    public RouteDTO getRouteDTO() {
 
-        return route;
+        return routeDTO;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRouteDTO(RouteDTO routeDTO) {
+        this.routeDTO = routeDTO;
     }
 
-    public Stop getStop() {
-        return stop;
+    public StopDTO getStopDTO() {
+        return stopDTO;
     }
 
-    public void setStop(Stop stop) {
-        this.stop = stop;
+    public void setStopDTO(StopDTO stopDTO) {
+        this.stopDTO = stopDTO;
     }
 
     @Override
     public String toString() {
         return "RouteStop{" +
-                "route=" + route +
-                ", stop=" + stop +
+                "routeDTO=" + routeDTO +
+                ", stopDTO=" + stopDTO +
                 ", timetable='" + timetable + '\'' +
                 "}\n";
     }

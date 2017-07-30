@@ -3,8 +3,8 @@ package transportproject.transportwebsite.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import transportproject.transportwebsite.dao.RouteDAO;
-import transportproject.transportwebsite.model.transport.Route;
-import transportproject.transportwebsite.model.transport.TransportType;
+import transportproject.transportwebsite.dto.RouteDTO;
+import transportproject.transportwebsite.dto.TransportType;
 import transportproject.transportwebsite.service.RouteService;
 import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
@@ -20,12 +20,12 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<Route> getRoutesByNumberAndTransportType(Integer routeNumber, TransportType type) throws NotFoundException {
+    public List<RouteDTO> getRoutesByNumberAndTransportType(Integer routeNumber, TransportType type) throws NotFoundException {
 
-        final List<Route> routes = routeDAO.getRoutesByRouteNumberAndTransportType(routeNumber, type);
-        if (routes.isEmpty()) {
+        final List<RouteDTO> routeDTOS = routeDAO.getRoutesByRouteNumberAndTransportType(routeNumber, type);
+        if (routeDTOS.isEmpty()) {
             throw new NotFoundException("Routes for route " + routeNumber + " and transport type " + type + " not found");
         }
-        return routes;
+        return routeDTOS;
     }
 }

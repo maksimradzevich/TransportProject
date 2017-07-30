@@ -5,14 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import transportproject.transportwebsite.business.stop.Stop;
+import transportproject.transportwebsite.business.stop.StopsAsSortedMap;
+import transportproject.transportwebsite.business.stop.StopsAsSortedMapImpl;
+import transportproject.transportwebsite.business.stop.StopsImpl;
+import transportproject.transportwebsite.business.user.UserImpl;
+import transportproject.transportwebsite.business.user.UserWithFavorites;
+import transportproject.transportwebsite.business.user.UserWithFavoritesImpl;
 import transportproject.transportwebsite.dao.RouteStopDAO;
-import transportproject.transportwebsite.dao.StopDAO;
-import transportproject.transportwebsite.service.FavoriteService;
-import transportproject.transportwebsite.service.StopService;
-import transportproject.transportwebsite.model.transport.Route;
-import transportproject.transportwebsite.model.transport.RouteStop;
-import transportproject.transportwebsite.model.transport.Stop;
-import transportproject.transportwebsite.model.transport.Transport;
+import transportproject.transportwebsite.dao.StopDTODAO;
+import transportproject.transportwebsite.dao.TransportDTODAO;
+import transportproject.transportwebsite.dto.RouteDTO;
+import transportproject.transportwebsite.dto.RouteStop;
+import transportproject.transportwebsite.dto.StopDTO;
+import transportproject.transportwebsite.dto.TransportDTO;
+import transportproject.transportwebsite.service.UserService;
+import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
 import java.util.List;
 import java.util.Map;
@@ -20,28 +28,40 @@ import java.util.Map;
 @Controller
 public class StopController {
 
-    private final StopDAO stopDAO;
+    private final StopDTODAO stopDTODAO;
     private final RouteStopDAO routeStopDAO;
-    private final StopService stopService;
-    private final FavoriteService favoriteService;
+    private final UserService userService;
+    private final TransportDTODAO transportDTODAO;
 
     @Autowired
-    public StopController(StopDAO stopDAO, RouteStopDAO routeStopDAO, StopService stopService, FavoriteService favoriteService) {
-        this.stopDAO = stopDAO;
+    public StopController(StopDTODAO stopDTODAO, RouteStopDAO routeStopDAO, UserService userService, TransportDTODAO transportDTODAO) {
+        this.stopDTODAO = stopDTODAO;
         this.routeStopDAO = routeStopDAO;
-        this.stopService = stopService;
-        this.favoriteService = favoriteService;
+        this.userService = userService;
+        this.transportDTODAO = transportDTODAO;
     }
 
     @GetMapping("/stop/{stopId}")
     public String stopPage(@PathVariable("stopId") Integer stopId, Model model) {
 
         List<RouteStop> routeStops = routeStopDAO.getRouteStopsByStopId(stopId);
-        final Stop stop = stopDAO.findOne(stopId);
-        boolean isInFavorites = favoriteService.isInFavorites(stop);
+        final StopDTO stopDTO = stopDTODAO.findOne(stopId);
+        final UserWithFavorites user;
+        boolean isInFavorites = false;
+        try {
+            user = new UserWithFavoritesImpl(
+                    userService.findActiveUser(),
+                    stopDTODAO,
+                    transportDTODAO
+            );
+            isInFavorites = user.isInFavorites(new Stop(stopDTO));
+        } catch (NotFoundException e) {
+            //TODO add something here
+        }
+
         model.addAttribute("inFavorites", isInFavorites);
         model.addAttribute("rStops", routeStops);
-        model.addAttribute("stop", stop);
+        model.addAttribute("stop", stopDTO);
 
         return "stop_all";
     }
@@ -51,24 +71,25 @@ public class StopController {
 
         final RouteStop routeStop = routeStopDAO.getRouteStopByRouteIdAndStopId(routeId, stopId);
         final String timetable = routeStop.getTimetable();
-        final Route route = routeStop.getRoute();
-        final Transport transport = route.getTransport();
-        final Integer routeNumber = transport.getRouteNumber();
-        final String nameOfTransport = transport.getType().getName();
-        final String routeName = route.getName();
-        final Stop stop = routeStop.getStop();
+        final RouteDTO routeDTO = routeStop.getRouteDTO();
+        final TransportDTO transportDTO = routeDTO.getTransportDTO();
+        final Integer routeNumber = transportDTO.getRouteNumber();
+        final String nameOfTransport = transportDTO.getType().getName();
+        final String routeName = routeDTO.getName();
+        final StopDTO stopDTO = routeStop.getStopDTO();
 
         model.addAttribute("timetable", timetable);
         model.addAttribute("transportName", nameOfTransport);
         model.addAttribute("transportNumber", routeNumber);
         model.addAttribute("routeName", routeName);
-        model.addAttribute("stop", stop);
+        model.addAttribute("stop", stopDTO);
         return "stop";
     }
 
     @GetMapping("/stops")
     public String stopsPage(Model model) {
-        final Map<Character, List<Stop>> sortedStops = stopService.getSortedStops();
+        final StopsAsSortedMap stops = new StopsAsSortedMapImpl(new StopsImpl(stopDTODAO));
+        final Map<Character, List<Stop>> sortedStops = stops.get();
         model.addAttribute("stops", sortedStops);
         return "stops";
     }

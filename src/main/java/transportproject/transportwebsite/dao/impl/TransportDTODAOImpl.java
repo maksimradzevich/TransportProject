@@ -8,23 +8,23 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import transportproject.transportwebsite.dao.TransportDAO;
-import transportproject.transportwebsite.model.transport.Transport;
-import transportproject.transportwebsite.model.transport.TransportType;
+import transportproject.transportwebsite.dao.TransportDTODAO;
+import transportproject.transportwebsite.dto.TransportDTO;
+import transportproject.transportwebsite.dto.TransportType;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional
 @Repository("transportDAO")
-public class TransportDAOImpl implements TransportDAO {
+public class TransportDTODAOImpl implements TransportDTODAO {
 
     private static final String TYPE_FIELD = "type";
     private static final String ROUTE_NUMBER_FIELD = "routeNumber";
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public TransportDAOImpl(SessionFactory sessionFactory) {
+    public TransportDTODAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -33,16 +33,16 @@ public class TransportDAOImpl implements TransportDAO {
     }
 
     private Criteria createEntityCriteria() {
-        return getSession().createCriteria(Transport.class);
+        return getSession().createCriteria(TransportDTO.class);
     }
 
     @Override
-    public List<Transport> findAllTransport() {
-        return (List<Transport>) createEntityCriteria().list();
+    public List<TransportDTO> findAllTransport() {
+        return (List<TransportDTO>) createEntityCriteria().list();
     }
 
     @Override
-    public List<Transport> findTransportByType(TransportType transportType) {
+    public List<TransportDTO> findTransportByType(TransportType transportType) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq(TYPE_FIELD, transportType));
         criteria.addOrder(Order.asc(ROUTE_NUMBER_FIELD));
@@ -50,26 +50,26 @@ public class TransportDAOImpl implements TransportDAO {
     }
 
     @Override
-    public Transport findTransportByRouteNumberAndTypeWithRoutes(int routeNumber, TransportType transportType) {
+    public TransportDTO findTransportByRouteNumberAndTypeWithRoutes(int routeNumber, TransportType transportType) {
         final Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq(TYPE_FIELD, transportType));
         criteria.add(Restrictions.eq(ROUTE_NUMBER_FIELD, routeNumber));
-        final Transport transport = (Transport) criteria.uniqueResult();
-        Hibernate.initialize(transport.getRoutes());
-        return transport;
+        final TransportDTO transportDTO = (TransportDTO) criteria.uniqueResult();
+        Hibernate.initialize(transportDTO.getRouteDTOS());
+        return transportDTO;
     }
 
     @Override
-    public Transport findTransportByRouteNumberAndType(int routeNumber, TransportType transportType) {
+    public TransportDTO findTransportByRouteNumberAndType(int routeNumber, TransportType transportType) {
         final Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq(TYPE_FIELD, transportType));
         criteria.add(Restrictions.eq(ROUTE_NUMBER_FIELD, routeNumber));
-        final Transport transport = (Transport) criteria.uniqueResult();
-        return transport;
+        final TransportDTO transportDTO = (TransportDTO) criteria.uniqueResult();
+        return transportDTO;
     }
 
     @Override
-    public Transport findById(int id) {
-        return (Transport) getSession().get(Transport.class, id);
+    public TransportDTO findById(int id) {
+        return (TransportDTO) getSession().get(TransportDTO.class, id);
     }
 }

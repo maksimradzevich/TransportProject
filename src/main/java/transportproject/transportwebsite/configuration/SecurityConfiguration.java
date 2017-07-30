@@ -17,16 +17,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Import(SpringMvcConfiguration.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+
     private final UserDetailsService authenticationService;
 
     @Autowired
     public SecurityConfiguration(UserDetailsService authenticationService) {
         this.authenticationService = authenticationService;
-    }
-
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(authenticationService);
     }
 
     @Override
@@ -40,6 +36,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .failureUrl("/login?error")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/login?error").and().logout().logoutSuccessUrl("/").and().csrf().disable();
+                .accessDeniedPage("/login?error").and().logout().logoutSuccessUrl("/")
+                .and()
+                .csrf()
+                .disable();
     }
 }

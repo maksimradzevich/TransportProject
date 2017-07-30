@@ -1,4 +1,4 @@
-package transportproject.transportwebsite.model.transport;
+package transportproject.transportwebsite.dto;
 
 import org.hibernate.annotations.*;
 
@@ -8,9 +8,9 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "Stop")
+@Table(name = "StopDTO")
 @org.hibernate.annotations.Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
-public class Stop {
+public class StopDTO {
 
     @Id
     @Column(name = "stop_id")
@@ -31,11 +31,11 @@ public class Stop {
         this.routeStops = routeStops;
     }
 
-    public Stop() {
+    public StopDTO() {
 
     }
 
-    public Stop(String name) {
+    public StopDTO(String name) {
         this.name = name;
     }
 
@@ -57,7 +57,7 @@ public class Stop {
 
     @Override
     public String toString() {
-        return "Stop{" +
+        return "StopDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
@@ -66,12 +66,12 @@ public class Stop {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Stop)) return false;
+        if (!(o instanceof StopDTO)) return false;
 
-        Stop stop = (Stop) o;
+        StopDTO stopDTO = (StopDTO) o;
 
-        if (id != null ? !id.equals(stop.id) : stop.id != null) return false;
-        if (name != null ? !name.equals(stop.name) : stop.name != null) return false;
+        if (id != null ? !id.equals(stopDTO.id) : stopDTO.id != null) return false;
+        if (name != null ? !name.equals(stopDTO.name) : stopDTO.name != null) return false;
 
         return true;
     }

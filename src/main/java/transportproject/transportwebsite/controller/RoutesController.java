@@ -5,15 +5,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import transportproject.transportwebsite.business.transport.Transport;
+import transportproject.transportwebsite.business.user.UserWithFavorites;
+import transportproject.transportwebsite.business.user.UserWithFavoritesImpl;
 import transportproject.transportwebsite.dao.RouteDAO;
 import transportproject.transportwebsite.dao.RouteStopDAO;
-import transportproject.transportwebsite.dao.TransportDAO;
-import transportproject.transportwebsite.model.transport.Route;
-import transportproject.transportwebsite.model.transport.RouteStop;
-import transportproject.transportwebsite.model.transport.Transport;
-import transportproject.transportwebsite.model.transport.TransportType;
-import transportproject.transportwebsite.service.FavoriteService;
+import transportproject.transportwebsite.dao.StopDTODAO;
+import transportproject.transportwebsite.dao.TransportDTODAO;
+import transportproject.transportwebsite.dto.RouteDTO;
+import transportproject.transportwebsite.dto.RouteStop;
+import transportproject.transportwebsite.dto.TransportDTO;
+import transportproject.transportwebsite.dto.TransportType;
 import transportproject.transportwebsite.service.RouteService;
+import transportproject.transportwebsite.service.UserService;
 import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
 import java.util.List;
@@ -24,38 +28,46 @@ public class RoutesController {
     private final RouteStopDAO routeStopDAO;
     private final RouteDAO routeDAO;
     private final RouteService routeService;
-    private final TransportDAO transportDAO;
-    private final FavoriteService favoriteService;
+    private final TransportDTODAO transportDTODAO;
+    private final UserService userService;
+    private final StopDTODAO stopDTODAO;
 
     @Autowired
-    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO, RouteService routeService, TransportDAO transportDAO, FavoriteService favoriteService) {
+    public RoutesController(RouteStopDAO routeStopDAO, RouteDAO routeDAO, RouteService routeService, TransportDTODAO transportDTODAO, UserService userService, StopDTODAO stopDTODAO) {
         this.routeStopDAO = routeStopDAO;
         this.routeDAO = routeDAO;
         this.routeService = routeService;
-        this.transportDAO = transportDAO;
-        this.favoriteService = favoriteService;
+        this.transportDTODAO = transportDTODAO;
+
+        this.userService = userService;
+        this.stopDTODAO = stopDTODAO;
     }
 
     @GetMapping(value = "/transport/{type}/{routeNumber}")
     public String routeListPage(Model model, @PathVariable("type") TransportType type, @PathVariable("routeNumber") Integer routeNumber) throws NotFoundException {
 
-        final List<Route> routes = routeService.getRoutesByNumberAndTransportType(routeNumber, type);
+        final List<RouteDTO> routeDTOS = routeService.getRoutesByNumberAndTransportType(routeNumber, type);
 
-        final Route route1 = routes.get(0);
-        final Route route2 = routes.get(1);
+        final RouteDTO routeDTO1 = routeDTOS.get(0);
+        final RouteDTO routeDTO2 = routeDTOS.get(1);
 
-        final String route1Name = route1.getName();
-        final String route2Name = route2.getName();
+        final String route1Name = routeDTO1.getName();
+        final String route2Name = routeDTO2.getName();
 
-        final List<RouteStop> routeStops1 = routeStopDAO.getRouteStopByRouteId(route1.getRouteId());
-        final List<RouteStop> routeStops2 = routeStopDAO.getRouteStopByRouteId(route2.getRouteId());
+        final List<RouteStop> routeStops1 = routeStopDAO.getRouteStopByRouteId(routeDTO1.getRouteId());
+        final List<RouteStop> routeStops2 = routeStopDAO.getRouteStopByRouteId(routeDTO2.getRouteId());
 
-        final Transport transport = transportDAO.findTransportByRouteNumberAndType(routeNumber, type);
+        final TransportDTO transportDTO = transportDTODAO.findTransportByRouteNumberAndType(routeNumber, type);
 
-        boolean isInFavorites = favoriteService.isInFavorites(transport);
+        final UserWithFavorites user = new UserWithFavoritesImpl(
+                userService.findActiveUser(),
+                stopDTODAO,
+                transportDTODAO
+        );
+        boolean isInFavorites = user.isInFavorites(new Transport(transportDTO));
         model.addAttribute("inFavorites", isInFavorites);
 
-        model.addAttribute("transport", transport);
+        model.addAttribute("transport", transportDTO);
         model.addAttribute("routeStops1", routeStops1);
         model.addAttribute("routeStops2", routeStops2);
         model.addAttribute("route1Name", route1Name);

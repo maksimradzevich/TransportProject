@@ -11,13 +11,13 @@
 
     </div>
 
-    <div class="row" th:each="entry : ${stops}">
+    <div class="row" th:each="entry : ${stopDTOS}">
         <div class="col-xs-12 col-sm-1">
             <h1 th:text="${entry.key}">#</h1>
         </div>
-        <div class="row col-xs-12 col-sm-11 stop-row">
-            <div class="col-xs-12 col-sm-4 ostanovka_name" th:each="stop : ${entry.value}">
-                <h3 class="list"><a th:href="@{/stop/{stopId}(stopId = ${stop.id})}" th:text="${stop.name}">остановк Первая остановк</a></h3>
+        <div class="row col-xs-12 col-sm-11 stopDTO-row">
+            <div class="col-xs-12 col-sm-4 ostanovka_name" th:each="stopDTO : ${entry.value}">
+                <h3 class="list"><a th:href="@{/stopDTO/{stopId}(stopId = ${stopDTO.id})}" th:text="${stopDTO.name}">остановк Первая остановк</a></h3>
             </div>
         </div>
     </div>

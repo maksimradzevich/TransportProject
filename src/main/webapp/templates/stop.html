@@ -10,7 +10,7 @@
 
     <h1><i class="fa fa-bus" aria-hidden="true"></i><span th:text="${' Расписание для ' + transportName + 'а №' + transportNumber}"></span></h1>
     <h5><i class="fa fa-clock-o" aria-hidden="true"></i><span> Осталось </span><span id="time"></span></h5>
-    <h3><i class="fa fa-map-marker" aria-hidden="true"></i><span th:text="${' Остановка ' + stop.name}"></span></h3>
+    <h3><i class="fa fa-map-marker" aria-hidden="true"></i><span th:text="${' Остановка ' + stopDTO.name}"></span></h3>
     <h3><i class="fa fa-map-signs" aria-hidden="true"></i><span th:text="${' Направление ' + routeName}"></span></h3>
 
     <p style="display: none" id="t" th:utext="${timetable}"></p>

@@ -46,7 +46,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="#" th:href="@{/}"><i class="fa fa-bus" aria-hidden="true"></i>&nbsp;Машруты<span class="sr-only">(current)</span></a></li>
-                <li><a href="#" th:href="@{/stops}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp;Остановки</a></li>
+                <li><a href="#" th:href="@{/stopDTOS}"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>&nbsp;Остановки</a></li>
                 <li><a class="text-danger" th:href="@{/comment}"><i class="fa fa-bug" aria-hidden="true"></i> Сообщить об ошибке</a></li>
             </ul>
             <ul th:if="${!#authorization.expression('hasAnyRole(''ROLE_admin, ROLE_user'')')}"
@@ -59,7 +59,7 @@
                 <li><a href="#" th:href="@{/profile}"></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Профиль<span
+                       aria-expanded="false"><span class="glyphicon glyphicon-userDTO" aria-hidden="true"></span>&nbsp;Профиль<span
                             class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>

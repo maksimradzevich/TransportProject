@@ -4,40 +4,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import transportproject.transportwebsite.business.user.UserImpl;
+import transportproject.transportwebsite.business.user.UserWithFavoritesImpl;
+import transportproject.transportwebsite.dao.StopDTODAO;
+import transportproject.transportwebsite.dao.TransportDTODAO;
+import transportproject.transportwebsite.dao.UserDTODAO;
 import transportproject.transportwebsite.dto.FavoriteItem;
-import transportproject.transportwebsite.model.transport.Stop;
-import transportproject.transportwebsite.model.transport.Transport;
-import transportproject.transportwebsite.service.FavoriteService;
+import transportproject.transportwebsite.service.UserService;
+import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
 @RestController
 public class FavoriteController {
 
-    private final FavoriteService favoriteService;
+    private final UserService userService;
+    private final StopDTODAO stopDTODAO;
+    private final TransportDTODAO transportDTODAO;
+    private final UserDTODAO userDTODAO;
 
     @Autowired
-    public FavoriteController(FavoriteService favoriteService) {
-        this.favoriteService = favoriteService;
+    public FavoriteController(UserService userService, StopDTODAO stopDTODAO, TransportDTODAO transportDTODAO, UserDTODAO userDTODAO) {
+        this.userService = userService;
+        this.stopDTODAO = stopDTODAO;
+        this.transportDTODAO = transportDTODAO;
+        this.userDTODAO = userDTODAO;
     }
 
     @RequestMapping(value = "/favorite", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Void> favoriteItem(@RequestBody FavoriteItem item) {
-        if (item.getType().equalsIgnoreCase(Stop.class.getSimpleName())) {
-            favoriteService.addFavoriteStop(item.getId());
-        } else if (item.getType().equalsIgnoreCase(Transport.class.getSimpleName())) {
-            favoriteService.addFavoriteTransport(item.getId());
+        try {
+            new UserWithFavoritesImpl(
+                    userService.findActiveUser(),
+                    stopDTODAO,
+                    transportDTODAO
+            ).addFavorite(item);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/unfavorite", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Void> unfavoriteItem(@RequestBody FavoriteItem item) {
-        if (item.getType().equalsIgnoreCase(Stop.class.getSimpleName())) {
-            favoriteService.removeFavoriteStop(item.getId());
-        } else if (item.getType().equalsIgnoreCase(Transport.class.getSimpleName())) {
-            favoriteService.removeFavoriteTransport(item.getId());
+        try {
+            new UserWithFavoritesImpl(
+                    userService.findActiveUser(),
+                    stopDTODAO,
+                    transportDTODAO
+            ).removeFavorite(item);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

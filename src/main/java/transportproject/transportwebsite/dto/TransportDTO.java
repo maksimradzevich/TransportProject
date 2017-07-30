@@ -1,4 +1,4 @@
-package transportproject.transportwebsite.model.transport;
+package transportproject.transportwebsite.dto;
 
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
@@ -10,9 +10,9 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "Transport")
+@Table(name = "TransportDTO")
 @Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
-public class Transport {
+public class TransportDTO {
 
     @Id
     @Column(name = "transport_id")
@@ -27,15 +27,15 @@ public class Transport {
     private Integer routeNumber;
 
     @OneToMany(mappedBy = "transport", cascade = CascadeType.ALL)
-    private List<Route> routes;
+    private List<RouteDTO> routeDTOS;
 
 
-    public Transport(TransportType type, Integer routeNumber) {
+    public TransportDTO(TransportType type, Integer routeNumber) {
         this.type = type;
         this.routeNumber = routeNumber;
     }
 
-    public Transport() {
+    public TransportDTO() {
     }
 
     public Integer getRouteNumber() {
@@ -62,24 +62,24 @@ public class Transport {
         this.type = type;
     }
 
-    public List<Route> getRoutes() {
-        return routes;
+    public List<RouteDTO> getRouteDTOS() {
+        return routeDTOS;
     }
 
-    public void setRoutes(List<Route> routes) {
-        this.routes = routes;
+    public void setRouteDTOS(List<RouteDTO> routeDTOS) {
+        this.routeDTOS = routeDTOS;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Transport)) return false;
+        if (!(o instanceof TransportDTO)) return false;
 
-        Transport transport = (Transport) o;
+        TransportDTO transportDTO = (TransportDTO) o;
 
-        if (id != null ? !id.equals(transport.id) : transport.id != null) return false;
-        if (type != transport.type) return false;
-        if (routeNumber != null ? !routeNumber.equals(transport.routeNumber) : transport.routeNumber != null)
+        if (id != null ? !id.equals(transportDTO.id) : transportDTO.id != null) return false;
+        if (type != transportDTO.type) return false;
+        if (routeNumber != null ? !routeNumber.equals(transportDTO.routeNumber) : transportDTO.routeNumber != null)
             return false;
 
         return true;
@@ -95,7 +95,7 @@ public class Transport {
 
     @Override
     public String toString() {
-        return "Transport{" +
+        return "TransportDTO{" +
                 "id=" + id +
 
                 ", type=" + type +

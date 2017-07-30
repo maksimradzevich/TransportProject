@@ -1,4 +1,4 @@
-package transportproject.transportwebsite.model.transport;
+package transportproject.transportwebsite.dto;
 
 import org.hibernate.annotations.*;
 
@@ -8,9 +8,9 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "Route")
+@Table(name = "RouteDTO")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class Route {
+public class RouteDTO {
 
     @Id
     @Column(name = "route_id")
@@ -19,7 +19,7 @@ public class Route {
 
     @ManyToOne
     @JoinColumn(name = "transport_id")
-    private Transport transport;
+    private TransportDTO transportDTO;
 
     @OneToMany(mappedBy = "route")
     private List<RouteStop> routeStops;
@@ -36,7 +36,7 @@ public class Route {
     private String name;
 
 //    @ManyToMany(mappedBy = "routes")
-//    private List<Stop> stops;
+//    private List<StopDTO> stops;
 
     public Integer getRouteId() {
         return routeId;
@@ -46,24 +46,24 @@ public class Route {
         this.routeId = routeId;
     }
 
-    public Transport getTransport() {
-        return transport;
+    public TransportDTO getTransportDTO() {
+        return transportDTO;
     }
 
-    public void setTransport(Transport transport) {
-        this.transport = transport;
+    public void setTransportDTO(TransportDTO transportDTO) {
+        this.transportDTO = transportDTO;
     }
 
-//    public List<Stop> getStops() {
+//    public List<StopDTO> get() {
 //        return stops;
 //    }
 //
-//    public void setStops(List<Stop> stops) {
+//    public void setStops(List<StopDTO> stops) {
 //        this.stops = stops;
 //    }
 
-    public Route(Transport transport) {
-        this.transport = transport;
+    public RouteDTO(TransportDTO transportDTO) {
+        this.transportDTO = transportDTO;
     }
 
     public List<RouteStop> getRouteStops() {
@@ -74,14 +74,14 @@ public class Route {
         this.routeStops = routeStops;
     }
 
-    public Route() {
+    public RouteDTO() {
     }
 
     @Override
     public String toString() {
-        return "Route{" +
+        return "RouteDTO{" +
                 "routeId=" + routeId +
-                ", transport=" + transport +
+                ", transportDTO=" + transportDTO +
                 '}';
     }
 }

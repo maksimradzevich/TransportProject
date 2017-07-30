@@ -1,19 +1,17 @@
-package transportproject.transportwebsite.model;
+package transportproject.transportwebsite.dto;
 
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import transportproject.transportwebsite.model.transport.Stop;
-import transportproject.transportwebsite.model.transport.Transport;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "User")
+@Table(name = "UserDTO")
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class User {
+public class UserDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,36 +24,36 @@ public class User {
     @JoinTable(name = "user_stop",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "stop_id")})
-    private List<Stop> favoriteStops = new ArrayList<Stop>();
+    private List<StopDTO> favoriteStopDTOS = new ArrayList<StopDTO>();
     @ManyToMany(cascade = CascadeType.ALL)
 
     @JoinTable(name = "user_transport",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "transport_id")})
-    private List<Transport> favoriteTransport = new ArrayList<Transport>();
+    private List<TransportDTO> favoriteTransportDTO = new ArrayList<TransportDTO>();
 
-    public User(String email, String password) {
+    public UserDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public User() {
+    public UserDTO() {
     }
 
-    public List<Transport> getFavoriteTransport() {
-        return favoriteTransport;
+    public List<TransportDTO> getFavoriteTransportDTO() {
+        return favoriteTransportDTO;
     }
 
-    public void setFavoriteTransport(List<Transport> favoriteTransport) {
-        this.favoriteTransport = favoriteTransport;
+    public void setFavoriteTransportDTO(List<TransportDTO> favoriteTransportDTO) {
+        this.favoriteTransportDTO = favoriteTransportDTO;
     }
 
-    public List<Stop> getFavoriteStops() {
-        return favoriteStops;
+    public List<StopDTO> getFavoriteStopDTOS() {
+        return favoriteStopDTOS;
     }
 
-    public void setFavoriteStops(List<Stop> favoriteStops) {
-        this.favoriteStops = favoriteStops;
+    public void setFavoriteStopDTOS(List<StopDTO> favoriteStopDTOS) {
+        this.favoriteStopDTOS = favoriteStopDTOS;
     }
 
     public Integer getId() {
@@ -93,14 +91,14 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (!(o instanceof UserDTO)) return false;
 
-        User user = (User) o;
+        UserDTO userDTO = (UserDTO) o;
 
-        if (!getId().equals(user.getId())) return false;
-        if (!getEmail().equals(user.getEmail())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
-        if (getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null) return false;
+        if (!getId().equals(userDTO.getId())) return false;
+        if (!getEmail().equals(userDTO.getEmail())) return false;
+        if (!getPassword().equals(userDTO.getPassword())) return false;
+        if (getRole() != null ? !getRole().equals(userDTO.getRole()) : userDTO.getRole() != null) return false;
 
         return true;
     }

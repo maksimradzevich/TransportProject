@@ -1,4 +1,4 @@
-package transportproject.transportwebsite.model.transport;
+package transportproject.transportwebsite.dto;
 
 public enum TransportType {
     BUS("автобус"),

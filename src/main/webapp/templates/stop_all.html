@@ -8,15 +8,15 @@
 
     <div th:replace="fragment :: nav"></div>
 
-    <p style="display: none" id="id" th:text="${stop.id}"></p>
-    <h1 class="stop-name" th:text="${'Остановка ' + stop.name}"> </h1>
+    <p style="display: none" id="id" th:text="${stopDTO.id}"></p>
+    <h1 class="stopDTO-name" th:text="${'Остановка ' + stopDTO.name}"> </h1>
 
     <div class="fav-button-container" id="buttonPlace">
-        <button th:if="${!inFavorites}" th:onclick="'favorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-warning fav-button">
+        <button th:if="${!inFavorites}" th:onclick="'favorite(' + ${stopDTO.id} + ', \'stopDTO\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-warning fav-button">
             <span class="glyphicon glyphicon-star" aria-hidden="true"></span> В избранное
         </button>
 
-        <button th:if="${inFavorites}" th:onclick="'unfavorite(' + ${stop.id} + ', \'stop\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-danger fav-button ">
+        <button th:if="${inFavorites}" th:onclick="'unfavorite(' + ${stopDTO.id} + ', \'stopDTO\');'" sec:authorize="isAuthenticated()" type="button" class="btn btn-danger fav-button ">
             <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Убрать из избранного
         </button>
     </div>
@@ -25,9 +25,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <div th:each="rs : ${rStops}">
-        <h3 ><i class="fa fa-bus" aria-hidden="true"></i><span th:text="${' Расписание для ' + rs.route.transport.type.name + 'a №' + rs.route.transport.routeNumber}"></span></h3>
+        <h3 ><i class="fa fa-bus" aria-hidden="true"></i><span th:text="${' Расписание для ' + rs.routeDTO.transportDTO.type.name + 'a №' + rs.routeDTO.transportDTO.routeNumber}"></span></h3>
         <h5><i class="fa fa-clock-o" aria-hidden="true"></i><span> Осталось </span><span th:id="time + ${rs.routeStopId}"></span></h5>
-        <h5 ><i class="fa fa-map-signs" aria-hidden="true"></i><span th:text="${' Направление ' + rs.route.name}"></span></h5>
+        <h5 ><i class="fa fa-map-signs" aria-hidden="true"></i><span th:text="${' Направление ' + rs.routeDTO.name}"></span></h5>
 
         <p style="display: none" th:id="t + ${rs.routeStopId}" id="t" th:utext="${rs.timetable}"></p>
 

@@ -1,7 +1,8 @@
 package transportproject.transportwebsite.service;
 
-import transportproject.transportwebsite.model.User;
+import transportproject.transportwebsite.business.user.UserImpl;
+import transportproject.transportwebsite.service.exceptions.NotFoundException;
 
 public interface UserService {
-    User findActiveUser();
+    UserImpl findActiveUser() throws NotFoundException;
 }
